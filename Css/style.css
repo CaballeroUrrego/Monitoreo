@@ -1,0 +1,512 @@
+/* ===== CONFIGURACIÓN BASE Y VARIABLES ===== */
+:root {
+  --bg-main: #0f172a;
+  --bg-dashboard: #020617;
+  --bg-card: #1e293b;
+  --bg-input: #0f172a;
+  --border-color: #334155;
+  --primary-adecco: #b91c1c;
+  --primary-adecco-dark: #7f1d1d;
+
+  /* Estados Semáforo */
+  --color-ok: #22c55e;
+  --color-fail: #ef4444;
+  --color-warn: #eab308;
+  --color-info: #06b6d4;
+}
+
+body {
+  margin: 0;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: var(--bg-main);
+  color: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* Evita desbordamiento horizontal global */
+}
+
+/* ===== SCROLLBARS PERSONALIZADAS (Estilo Dark Nocturno) ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dashboard);
+}
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(
+    135deg,
+    var(--primary-adecco-dark),
+    var(--primary-adecco)
+  );
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== GRID DEL DASHBOARD SUPERIOR ===== */
+.top-dashboard {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1.5fr;
+  gap: 16px;
+  background-color: var(--bg-dashboard);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.box {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.box:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Etiquetas del Dashboard Superior (Analista, Turno, STB) - REPARADO */
+.box .form-label.text-muted {
+  color: #cbd5e1 !important; /* Gris claro de alta visibilidad */
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Forzar Inputs Oscuros y Limpios */
+.box input,
+.box select,
+.box textarea {
+  background-color: var(--bg-input) !important;
+  color: #f1f5f9 !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 6px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.box input:focus,
+.box select:focus,
+.box textarea:focus {
+  border-color: var(--primary-adecco) !important;
+  box-shadow: 0 0 0 2px rgba(185, 28, 28, 0.2) !important;
+  outline: none;
+}
+
+/* ===== BOTONERA FLUIDA ===== */
+.acciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.acciones .btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px 8px;
+  border-radius: 8px;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.acciones .btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+}
+
+.acciones .btn:active {
+  transform: translateY(1px);
+}
+
+/* Mapeo de Colores Semánticos */
+.btn-save {
+  background-color: #dc2626;
+}
+.btn-export {
+  background-color: #2563eb;
+}
+.btn-load {
+  background-color: #f97316;
+}
+.btn-report {
+  background-color: #9333ea;
+}
+.btn-add {
+  background-color: #16a34a;
+}
+
+/* Historial de comentarios */
+#comentarioInput {
+  height: 62px;
+  resize: none;
+}
+
+#listaComentarios {
+  font-size: 12px;
+  max-height: 95px;
+  overflow-y: auto;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+/* ===== BARRA DE BÚSQUEDA BASE ===== */
+#buscadorCanal {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+#buscadorCanal:focus {
+  border-color: var(--primary-adecco) !important;
+  box-shadow: 0 0 0 2px rgba(185, 28, 28, 0.2) !important;
+}
+
+/* Ajuste de contraste para la leyenda informativa del buscador */
+.indicators-legend {
+  color: #cbd5e1 !important;
+}
+.indicators-legend b {
+  color: #ffffff !important;
+}
+
+/* ===== GRID DINÁMICA DE CANALES ===== */
+.grid-canales {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+  gap: 14px;
+}
+
+/* CARDS DE MONITOREO (Estilo Premium NOC) */
+.card {
+  background-color: var(--bg-card);
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 4px solid #64748b; /* Estado por defecto */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-top-color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Título de Canal editable - REPARADO (Blanco y legible) */
+.canal-titulo {
+  color: #ffffff !important;
+  font-weight: 600;
+  outline: none;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.canal-titulo:focus {
+  background-color: var(--bg-input);
+  box-shadow: 0 0 0 1px var(--border-color);
+}
+
+/* Estados Dinámicos del Semáforo con Brillo Fluido (Glow) */
+.card.ok {
+  border-top: 4px solid var(--color-ok) !important;
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.1);
+}
+.card.fail {
+  border-top: 4px solid var(--color-fail) !important;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.15);
+  animation: pulse-fail 2s infinite alternate; /* Sutil alerta visual en fallas */
+}
+.card.warn {
+  border-top: 4px solid var(--color-warn) !important;
+  box-shadow: 0 4px 10px rgba(234, 179, 8, 0.1);
+}
+
+@keyframes pulse-fail {
+  0% {
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.15);
+  }
+  100% {
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+  }
+}
+
+/* Controles dentro de las Cards */
+.card select {
+  background-color: var(--bg-input);
+  color: #f1f5f9;
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+
+.card select:hover {
+  background-color: #131c2e;
+  border-color: #475569;
+}
+
+/* ==========================================================================
+   CAMPO DE NOVEDAD DENTRO DE LAS CARDS (REPARADO PARA LEGIBILIDAD)
+   ========================================================================== */
+.card input {
+  background-color: var(
+    --bg-input
+  ) !important; /* Fondo oscuro integrado al tema */
+  color: #ffffff !important; /* Texto escrito en blanco nítido */
+  border: 1px solid var(--border-color) !important;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  width: 100%;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+/* Forzar la visibilidad del texto sugerido "Novedad..." */
+.card input::placeholder {
+  color: #94a3b8 !important; /* Gris claro (slate-400) de alta legibilidad */
+  opacity: 1 !important; /* Resetea la opacidad baja por defecto de los navegadores */
+}
+
+.card input:focus {
+  border-color: var(
+    --color-info
+  ) !important; /* Destaca el input activo en un elegante tono cian */
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2) !important;
+  outline: none;
+}
+
+/* ==========================================================================
+   BARRA DE BÚSQUEDA Y LEYENDA OPTIMIZADA (FLEX)
+   ========================================================================== */
+
+/* Controla las proporciones exactas del buscador */
+.input-group-custom {
+  max-width: 360px;
+  width: 100%;
+}
+
+.input-group-custom .form-control {
+  box-shadow: none !important;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Brillo reactivo cian al enfocar el input */
+.input-group-custom .form-control:focus {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(13, 202, 240, 0.4) !important;
+}
+
+/* Brillo estático del icono de búsqueda */
+.animated-glow {
+  text-shadow: 0 0 8px rgba(13, 202, 240, 0.6);
+}
+
+/* Estilos de los Badges de la Leyenda */
+.project-legend .badge {
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.project-legend .badge b {
+  color: #0dcaf0; /* Resalta las letras iniciales en un cian de alta definición */
+  margin-right: 2px;
+}
+
+/* Estilos extraídos del antiguo contenedor PDF en línea */
+.pdf-container {
+  display: none;
+  background: white;
+  color: black;
+  padding: 30px;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.pdf-header {
+  border-bottom: 3px solid #b91c1c;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pdf-title {
+  color: #b91c1c;
+  margin: 0;
+}
+
+.pdf-date {
+  font-size: 12px;
+  color: #666;
+}
+
+.pdf-summary {
+  margin-bottom: 25px;
+}
+
+.pdf-chart-wrapper {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto 30px auto;
+}
+
+/* ==========================================================================
+   ===== SECCIÓN DE MEDIA QUERIES (RESPONSIVIDAD Y ADAPTABILIDAD) =====
+   ========================================================================== */
+
+/* --- PANTALLAS MEDIANAS / TABLETS (max-width: 991.98px) --- */
+@media (max-width: 991.98px) {
+  .top-dashboard {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px !important;
+  }
+
+  .box {
+    padding: 12px !important;
+  }
+}
+
+/* --- TABLETS PEQUEÑAS / MÓVILES GRANDES (max-width: 768px) --- */
+@media (max-width: 768px) {
+  /* Optimización del área de búsqueda y leyenda */
+  .bg-dark.p-3 {
+    padding: 12px !important;
+  }
+
+  .bg-dark.p-3 > .d-flex {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .input-group-custom {
+    max-width: 100%;
+  }
+
+  .project-legend {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* --- MÓVILES ESTÁNDAR (max-width: 575.98px) --- */
+@media (max-width: 575.98px) {
+  /* Cabecera compacta y centrada */
+  .header {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    padding: 12px 16px !important;
+  }
+
+  .header h2 {
+    justify-content: center;
+    font-size: 1.1rem !important;
+  }
+
+  /* Rediseño premium de los indicadores (Evita desbordamiento horizontal) */
+  #panelNOC {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+
+  #panelNOC span {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+  }
+
+  /* Optimización de botones de acción para formato táctil en móviles */
+  .acciones {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+  }
+
+  .acciones .btn {
+    font-size: 11px;
+    padding: 8px 6px;
+  }
+
+  /* Grid de canales apilada */
+  .grid-canales {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Reducción de espaciados para maximizar área visible */
+  .container-fluid {
+    padding: 12px !important;
+  }
+
+  .card {
+    padding: 12px;
+  }
+}
+
+/* --- MÓVILES EXTRA PEQUEÑOS (max-width: 380px) --- */
+@media (max-width: 380px) {
+  #panelNOC {
+    font-size: 11px !important;
+    padding: 6px 8px !important;
+  }
+
+  #panelNOC span {
+    padding: 3px 6px;
+  }
+
+  .acciones {
+    grid-template-columns: 1fr 1fr; /* Fuerza una cuadrícula exacta de 2 columnas */
+    gap: 6px;
+  }
+
+  .acciones .btn {
+    font-size: 10.5px;
+    padding: 8px 4px;
+  }
+}
