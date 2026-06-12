@@ -3,13 +3,22 @@
 Breve resumen de las mejoras aplicadas entre la versión antigua (`Monitoreo_TV_Digital v6.1.html`) y la versión mejorada (`index.html`).
 
 **Mejoras**
-- **Estructura:** separación clara entre HTML, CSS y JS; `Css/style.css` y `js/script.js` centralizan estilos y comportamiento.
-- **UI/UX:** encabezado con logo, panel NOC con más indicadores (`Novedades`, `Comentarios`) y botones con iconos y estados coherentes.
-- **Responsividad:** diseño adaptativo con media queries y grid responsivo (`.grid-canales`) para móviles.
-- **Buscador y filtrado:** buscador con botón limpiar y manejo de "no results" para filtrar cards dinámicamente.
-- **Comentarios y novedades:** historial de comentarios con contador global y contador dinámico de novedades.
-- **Export/Import y PDF:** exportación JSON/CSV robusta, import con validación, y generación de PDF con resumen por STB y lista de fallas.
-- **Estética y microinteracciones:** variables CSS, sombras, animaciones sutiles para alertas y focus mejorado.
+- **Separación de capas:** `index.html` para markup, `Css/style.css` para estilos y `js/script.js` para la lógica. Esto convierte el código en algo mucho más mantenible que la versión antigua monolítica.
+- **Panel NOC completo:** indicadores en tiempo real para `Total`, `Fallas`, `Salud`, `Novedades` y `Comentarios`.
+- **Interfaz más usable:** botones con iconos, diseño ordenado, acciones claras y estado visual inmediato en cada canal.
+- **Responsive:** layout adaptativo con `grid` y media queries, para que la app funcione bien en pantallas grandes y móviles.
+- **Gestión de canales mejorada:** agregar/eliminar canales, editar nombres y marcar cada canal con `Todo OK`.
+- **Buscador de canales:** filtro instantáneo con botón limpiar y mensaje cuando no hay resultados.
+- **STB y meta datos:** guardar múltiples STBs distintos en `localStorage`, con `analista`, `turno`, `stb` y `fecha`.
+- **Guardado local por STB:** cada STB mantiene su propio conjunto de datos y comentarios en el navegador.
+- **Exportación JSON inteligente:** un solo botón `Exportar JSON` que:
+  - genera `Monitoreo_TV_TODOS_[fecha].json` cuando ya se han monitoreado todos los STBs definidos,
+  - genera `Monitoreo_TV_[fecha].json` cuando faltan STBs por monitorear.
+- **Importación robusta:** carga JSON y mergea con los datos ya existentes para mantener todos los STBs guardados en la aplicación.
+- **Exportación Excel:** reporte CSV con los datos de todos los STBs y canales.
+- **Generación de PDF:** informe ejecutivo con resumen global, tabla de STBs, fallas, novedades y observaciones.
+- **Comentarios persistentes:** historial de comentarios guardado, visualizado y contado en el panel.
+- **Experiencia visual:** uso de variables CSS, sombras, estados de color, y animaciones suaves para mejor feedback.
 
 **Archivos clave**
 - **Interfaz mejorada:** [index.html](index.html)

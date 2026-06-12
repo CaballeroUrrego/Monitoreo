@@ -585,19 +585,29 @@ function actualizarPanel() {
 /* ================= EXPORTACIÓN E IMPORTACIÓN DE ARCHIVOS ================= */
 function exportarDatos() {
   let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
-  if (Object.keys(db).length === 0) {
-    alert("No hay datos guardados para exportar. Guarda primero con 'Guardar Local'.");
+  let keys = Object.keys(db);
+  if (keys.length === 0) {
+    alert(
+      "No hay datos guardados para exportar. Guarda primero con 'Guardar Local'.",
+    );
     return;
   }
 
+  let stbOptions = document.querySelectorAll("#stb option");
+  let totalSTBs = stbOptions.length;
   let fecha = new Date().toISOString().slice(0, 10);
-  let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+  let filename = `Monitoreo_TV_${fecha}.json`;
+
+  if (keys.length === totalSTBs) {
+    filename = `Monitoreo_TV_TODOS_${fecha}.json`;
+  }
+
+  let dataStr =
+    "data:text/json;charset=utf-8," +
+    encodeURIComponent(JSON.stringify(db, null, 2));
   let downloadAnchor = document.createElement("a");
   downloadAnchor.setAttribute("href", dataStr);
-  downloadAnchor.setAttribute(
-    "download",
-    `Monitoreo_TV_TodosSTBs_${fecha}.json`,
-  );
+  downloadAnchor.setAttribute("download", filename);
   document.body.appendChild(downloadAnchor);
   downloadAnchor.click();
   downloadAnchor.remove();
@@ -632,7 +642,9 @@ function procesarArchivoImportado(event) {
       }
 
       cargarDatos();
-      alert(`✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`);
+      alert(
+        `✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`,
+      );
     } catch (err) {
       alert("Error: El archivo seleccionado no es un JSON válido.");
     }
@@ -695,7 +707,7 @@ function generarPDF() {
   }
 
   let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
-  
+
   if (Object.keys(db).length === 0) {
     alert("⚠️ No hay datos guardados. Guarda primero con 'Guardar Local'.");
     return;
@@ -705,9 +717,9 @@ function generarPDF() {
   let estadisticasGlobales = {
     totalSTBs: 0,
     totalCanalesPorSTB: canales.length,
-    stbs: []
+    stbs: [],
   };
-  
+
   let totalCanalesFallasGlobal = 0;
   let totalCanalesOKGlobal = 0;
   let detallesFallasGlobal = [];
@@ -753,7 +765,7 @@ function generarPDF() {
             stb: stb,
             canal: c,
             tipoFalla: tiposFalla.join(", "),
-            analista: data.meta.analista || "N/A"
+            analista: data.meta.analista || "N/A",
           });
         } else {
           canalesOK++;
@@ -765,15 +777,14 @@ function generarPDF() {
             stb: stb,
             canal: c,
             novedad: datosCanal.novedad,
-            analista: data.meta.analista || "N/A"
+            analista: data.meta.analista || "N/A",
           });
         }
       }
     });
 
-    let salud = canales.length > 0 
-      ? Math.round((canalesOK / canales.length) * 100) 
-      : 100;
+    let salud =
+      canales.length > 0 ? Math.round((canalesOK / canales.length) * 100) : 100;
 
     estadisticasGlobales.stbs.push({
       nombre: stb,
@@ -783,7 +794,7 @@ function generarPDF() {
       salud: salud,
       analista: data.meta.analista || "N/A",
       turno: data.meta.turno || "N/A",
-      fecha: data.meta.fecha || "N/A"
+      fecha: data.meta.fecha || "N/A",
     });
 
     // Agregar comentarios
@@ -793,7 +804,7 @@ function generarPDF() {
           stb: stb,
           texto: com.texto,
           fecha: com.fecha,
-          analista: data.meta.analista || "N/A"
+          analista: data.meta.analista || "N/A",
         });
       });
     }
@@ -802,20 +813,25 @@ function generarPDF() {
   estadisticasGlobales.totalSTBs = Object.keys(db).length;
 
   let totalGlobalCanales = estadisticasGlobales.totalSTBs * canales.length;
-  let saludGlobal = totalGlobalCanales > 0 
-    ? Math.round((totalCanalesOKGlobal / totalGlobalCanales) * 100) 
-    : 100;
-  let estadoGlobal = totalCanalesFallasGlobal === 0
-    ? "ESTADO GENERAL: ✅ TODO OK"
-    : "ESTADO GENERAL: ⚠️ CON FALLAS";
+  let saludGlobal =
+    totalGlobalCanales > 0
+      ? Math.round((totalCanalesOKGlobal / totalGlobalCanales) * 100)
+      : 100;
+  let estadoGlobal =
+    totalCanalesFallasGlobal === 0
+      ? "ESTADO GENERAL: ✅ TODO OK"
+      : "ESTADO GENERAL: ⚠️ CON FALLAS";
 
   // ===== LLENAR HTML =====
-  document.getElementById("pdfFechaReporte").innerText = new Date().toLocaleString();
+  document.getElementById("pdfFechaReporte").innerText =
+    new Date().toLocaleString();
   document.getElementById("pdfEstadoGeneral").innerText = estadoGlobal;
-  document.getElementById("pdfTotalCanales").innerText = `${estadisticasGlobales.totalSTBs} STBs (${totalGlobalCanales} canales)`;
+  document.getElementById("pdfTotalCanales").innerText =
+    `${estadisticasGlobales.totalSTBs} STBs (${totalGlobalCanales} canales)`;
   document.getElementById("pdfCanalesOK").innerText = totalCanalesOKGlobal;
   document.getElementById("pdfPorcentajeOK").innerText = saludGlobal + "%";
-  document.getElementById("pdfCanalesFallas").innerText = totalCanalesFallasGlobal;
+  document.getElementById("pdfCanalesFallas").innerText =
+    totalCanalesFallasGlobal;
   document.getElementById("pdfSalud").innerText = saludGlobal + "%";
 
   // Tabla STBs
@@ -866,7 +882,8 @@ function generarPDF() {
   if (detallesNovedadesGlobal.length === 0) {
     novedadesHTML = "<p style='color: #666;'>Sin novedades reportadas</p>";
   } else {
-    novedadesHTML = "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
+    novedadesHTML =
+      "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
     detallesNovedadesGlobal.forEach((nov) => {
       novedadesHTML += `<li style='margin-bottom: 5px;'><b>${nov.stb} (${nov.analista}):</b> ${nov.novedad}</li>`;
     });
@@ -877,9 +894,11 @@ function generarPDF() {
   // Observaciones Consolidadas
   let observacionesHTML = "";
   if (observacionesGlobal.length === 0) {
-    observacionesHTML = "<p style='color: #666;'>Sin observaciones reportadas</p>";
+    observacionesHTML =
+      "<p style='color: #666;'>Sin observaciones reportadas</p>";
   } else {
-    observacionesHTML = "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
+    observacionesHTML =
+      "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
     observacionesGlobal.forEach((obs) => {
       observacionesHTML += `<li style='margin-bottom: 5px;'><b>${obs.stb} (${obs.analista}):</b> ${obs.texto} <span style='color: #999; font-size: 10px;'>(${obs.fecha})</span></li>`;
     });
