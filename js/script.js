@@ -584,28 +584,19 @@ function actualizarPanel() {
 
 /* ================= EXPORTACIÓN E IMPORTACIÓN DE ARCHIVOS ================= */
 function exportarDatos() {
-  let stbSelect = document.getElementById("stb");
-  let stb = stbSelect ? stbSelect.value : "Desconocido";
-  
   let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
-  if (!db[stb]) {
-    alert("No hay datos guardados para este STB. Guarda primero con 'Guardar Local'.");
+  if (Object.keys(db).length === 0) {
+    alert("No hay datos guardados para exportar. Guarda primero con 'Guardar Local'.");
     return;
   }
-  
-  // Crear objeto con solo el STB actual
-  let exportData = {};
-  exportData[stb] = db[stb];
-  
-  let analista = document.getElementById("analista")?.value || "SinAnalista";
+
   let fecha = new Date().toISOString().slice(0, 10);
-  
-  let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+  let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
   let downloadAnchor = document.createElement("a");
   downloadAnchor.setAttribute("href", dataStr);
   downloadAnchor.setAttribute(
     "download",
-    `Monitoreo_TV_${analista}_${stb}_${fecha}.json`,
+    `Monitoreo_TV_TodosSTBs_${fecha}.json`,
   );
   document.body.appendChild(downloadAnchor);
   downloadAnchor.click();
@@ -624,9 +615,24 @@ function procesarArchivoImportado(event) {
   reader.onload = function (e) {
     try {
       let parsed = JSON.parse(e.target.result);
-      localStorage.setItem("monitoreoTV", JSON.stringify(parsed));
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        throw new Error("Formato incorrecto");
+      }
+
+      let currentDb = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+      let mergedDb = { ...currentDb, ...parsed };
+      localStorage.setItem("monitoreoTV", JSON.stringify(mergedDb, null, 2));
+
+      const importedKeys = Object.keys(parsed);
+      const stbSelect = document.getElementById("stb");
+      if (stbSelect && importedKeys.length > 0) {
+        if (!mergedDb[stbSelect.value]) {
+          stbSelect.value = importedKeys[0];
+        }
+      }
+
       cargarDatos();
-      alert("✅ Datos importados correctamente desde el JSON.");
+      alert(`✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`);
     } catch (err) {
       alert("Error: El archivo seleccionado no es un JSON válido.");
     }
