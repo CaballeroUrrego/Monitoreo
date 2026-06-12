@@ -1,4 +1,6 @@
-/* ================= VARIABLES GLOBALES Y DATA INITIAL ================= */
+/* ================= VARIABLES GLOBALES Y DATA INICIAL ================= */
+
+// Lista de canales que se carga desde localStorage si existe, o se inicializa con los canales por defecto.
 let canales = JSON.parse(localStorage.getItem("canales")) || [
   "Canal 02 - InfoTigo",
   "Canal 03 - City TV",
@@ -183,19 +185,20 @@ let canales = JSON.parse(localStorage.getItem("canales")) || [
   "Canal 503 - Penthouse",
 ];
 
+// Variable reservada para futuras funcionalidades de gráfico PDF.
 let pdfChartInstance = null;
 
-// Ejecutar al cargar la página
+// ===== INICIALIZACIÓN =====
 window.addEventListener("DOMContentLoaded", () => {
-  render();
-  renderComentarios();
+  render(); // Generar la interfaz principal de canales.
+  renderComentarios(); // Cargar el historial de comentarios.
 
   const stbElem = document.getElementById("stb");
   if (stbElem) {
     stbElem.addEventListener("change", cargarDatos);
   }
 
-  // Vincular evento de importación al input file oculto del HTML
+  // Vincular el input oculto para importar archivos JSON.
   const fileInput = document.getElementById("fileInput");
   if (fileInput) {
     fileInput.addEventListener("change", procesarArchivoImportado);
@@ -256,58 +259,60 @@ function render() {
   if (!contenedorCanales) return;
 
   canales.forEach((c, i) => {
+    // Generar un ID seguro para cada canal eliminando caracteres especiales.
     let id = c.replace(/[^a-zA-Z0-9]/g, "");
 
     html += `
-        <div class="card" id="card-${id}">
-            <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom border-secondary border-opacity-20">
-                <span class="canal-titulo fw-semibold text-truncate me-2" contenteditable="true" onblur="editarCanal(${i},this.innerText)">${c}</span>
-                <button class="btn btn-sm btn-outline-danger py-0 px-1 border-0" onclick="eliminarCanal(${i})" title="Eliminar Canal">✕</button>
-            </div>
+      <div class="card" id="card-${id}">
+        <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom border-secondary border-opacity-20">
+          <span class="canal-titulo fw-semibold text-truncate me-2" contenteditable="true" onblur="editarCanal(${i},this.innerText)">${c}</span>
+          <button class="btn btn-sm btn-outline-danger py-0 px-1 border-0" onclick="eliminarCanal(${i})" title="Eliminar Canal">✕</button>
+        </div>
 
-            <div class="row g-1 mb-1">
-                <div class="col-4">
-                    <select id="${id}-video" onchange="actualizar('${id}')">
-                        <option>V OK</option><option>V FAIL</option>
-                    </select>
-                </div>
-                <div class="col-4">
-                    <select id="${id}-audioPri" onchange="actualizar('${id}')">
-                        <option>A1 OK</option><option>A1 FAIL</option>
-                    </select>
-                </div>
-                <div class="col-4">
-                    <select id="${id}-audioSec" onchange="actualizar('${id}')">
-                        <option>A2 OK</option><option>A2 FAIL</option><option>N/A</option>
-                    </select>
-                </div>
-            </div>
+        <div class="row g-1 mb-1">
+          <div class="col-4">
+            <select id="${id}-video" onchange="actualizar('${id}')">
+              <option>V OK</option><option>V FAIL</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <select id="${id}-audioPri" onchange="actualizar('${id}')">
+              <option>A1 OK</option><option>A1 FAIL</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <select id="${id}-audioSec" onchange="actualizar('${id}')">
+              <option>A2 OK</option><option>A2 FAIL</option><option>N/A</option>
+            </select>
+          </div>
+        </div>
 
-            <div class="row g-1 mb-2">
-                <div class="col-6">
-                    <select id="${id}-logo" onchange="actualizar('${id}')">
-                        <option>L OK</option><option>L FAIL</option>
-                    </select>
-                </div>
-                <div class="col-6">
-                    <select id="${id}-epg" onchange="actualizar('${id}')">
-                        <option>E OK</option><option>E FAIL</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="d-flex gap-1">
-                <button onclick="todoOK('${id}')" class="btn btn-success btn-sm py-1 w-100" style="font-size:11px;"><i class="fa-solid fa-check"></i> Todo OK</button>
-            </div>
+        <div class="row g-1 mb-2">
+          <div class="col-6">
+            <select id="${id}-logo" onchange="actualizar('${id}')">
+              <option>L OK</option><option>L FAIL</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <select id="${id}-epg" onchange="actualizar('${id}')">
+              <option>E OK</option><option>E FAIL</option>
+            </select>
+          </div>
+        </div>
 
-            <div class="mt-2">
-                <input id="${id}-novedad" class="form-control form-control-sm text-white" placeholder="Novedad..." oninput="guardarNovedad('${id}', this.value)" style="font-size:11px;">
-            </div>
-        </div>`;
+        <div class="d-flex gap-1">
+          <button onclick="todoOK('${id}')" class="btn btn-success btn-sm py-1 w-100" style="font-size:11px;"><i class="fa-solid fa-check"></i> Todo OK</button>
+        </div>
+
+        <div class="mt-2">
+          <input id="${id}-novedad" class="form-control form-control-sm text-white" placeholder="Novedad..." oninput="guardarNovedad('${id}', this.value)" style="font-size:11px;">
+        </div>
+      </div>`;
   });
 
   contenedorCanales.innerHTML = html;
 
+  // Ejecutar después de renderizar para cargar datos guardados y activar el buscador.
   setTimeout(() => {
     cargarDatos();
     inicializarBuscador();
@@ -341,21 +346,21 @@ function eliminarCanal(i) {
 
 /* ================= PERSISTENCIA LOCAL Y STB ================= */
 function guardarLocal() {
-  let stbSelect = document.getElementById("stb");
+  const stbSelect = document.getElementById("stb");
   if (!stbSelect) return;
-  let stb = stbSelect.value;
 
-  let db = JSON.parse(localStorage.getItem("monitoreoTV")) || {};
-  let datos = {};
-  let novedadesTemp = JSON.parse(localStorage.getItem("novedadesTemp") || "{}");
+  const stb = stbSelect.value;
+  const db = JSON.parse(localStorage.getItem("monitoreoTV")) || {};
+  const novedadesTemp = JSON.parse(localStorage.getItem("novedadesTemp") || "{}");
+  const datos = {};
 
   canales.forEach((c) => {
-    let id = c.replace(/[^a-zA-Z0-9]/g, "");
-    let videoElem = document.getElementById(id + "-video");
-    let audioPriElem = document.getElementById(id + "-audioPri");
-    let audioSecElem = document.getElementById(id + "-audioSec");
-    let logoElem = document.getElementById(id + "-logo");
-    let epgElem = document.getElementById(id + "-epg");
+    const id = c.replace(/[^a-zA-Z0-9]/g, "");
+    const videoElem = document.getElementById(id + "-video");
+    const audioPriElem = document.getElementById(id + "-audioPri");
+    const audioSecElem = document.getElementById(id + "-audioSec");
+    const logoElem = document.getElementById(id + "-logo");
+    const epgElem = document.getElementById(id + "-epg");
 
     if (videoElem && audioPriElem && audioSecElem && logoElem && epgElem) {
       datos[id] = {
@@ -370,7 +375,7 @@ function guardarLocal() {
     }
   });
 
-  let comentarios = JSON.parse(localStorage.getItem("comentariosTV")) || [];
+  const comentarios = JSON.parse(localStorage.getItem("comentariosTV")) || [];
 
   db[stb] = {
     meta: {
@@ -383,54 +388,51 @@ function guardarLocal() {
     comentarios,
   };
 
-  const jsonString = JSON.stringify(db, null, 2);
-
-  // Guardar solo en localStorage del navegador
-  localStorage.setItem("monitoreoTV", jsonString);
+  localStorage.setItem("monitoreoTV", JSON.stringify(db, null, 2));
   actualizarPanel();
 
   alert("✅ Datos guardados correctamente en la aplicación.");
 }
 
 function cargarDatos() {
-  let stbSelect = document.getElementById("stb");
+  const stbSelect = document.getElementById("stb");
   if (!stbSelect) return;
-  let stb = stbSelect.value;
 
-  let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const stb = stbSelect.value;
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
 
   if (!db[stb]) {
+    // Si no hay datos para el STB seleccionado, resetear controles visuales.
     document.querySelectorAll(".grid-canales .card").forEach((c) => {
       c.classList.remove("ok", "fail", "warn");
     });
-    const cards = document.querySelectorAll(".grid-canales .card");
-    cards.forEach((card) => {
+    document.querySelectorAll(".grid-canales .card").forEach((card) => {
       card.querySelectorAll("select").forEach((s) => (s.selectedIndex = 0));
-      let inputNovedad = card.querySelector("input");
+      const inputNovedad = card.querySelector("input");
       if (inputNovedad) inputNovedad.value = "";
     });
     actualizarPanel();
     return;
   }
 
-  let data = db[stb];
-  if (document.getElementById("analista"))
-    document.getElementById("analista").value = data.meta.analista || "";
-  if (document.getElementById("turno"))
-    document.getElementById("turno").value = data.meta.turno || "";
+  const data = db[stb];
+  const analistaInput = document.getElementById("analista");
+  const turnoInput = document.getElementById("turno");
 
-  let novedadesTemp = {};
+  if (analistaInput) analistaInput.value = data.meta.analista || "";
+  if (turnoInput) turnoInput.value = data.meta.turno || "";
+
+  const novedadesTemp = {};
 
   if (data.datos) {
     Object.values(data.datos).forEach((d) => {
-      let id = d.canal.replace(/[^a-zA-Z0-9]/g, "");
-
-      let videoElem = document.getElementById(id + "-video");
-      let audioPriElem = document.getElementById(id + "-audioPri");
-      let audioSecElem = document.getElementById(id + "-audioSec");
-      let logoElem = document.getElementById(id + "-logo");
-      let epgElem = document.getElementById(id + "-epg");
-      let novedadElem = document.getElementById(id + "-novedad");
+      const id = d.canal.replace(/[^a-zA-Z0-9]/g, "");
+      const videoElem = document.getElementById(id + "-video");
+      const audioPriElem = document.getElementById(id + "-audioPri");
+      const audioSecElem = document.getElementById(id + "-audioSec");
+      const logoElem = document.getElementById(id + "-logo");
+      const epgElem = document.getElementById(id + "-epg");
+      const novedadElem = document.getElementById(id + "-novedad");
 
       if (videoElem) videoElem.value = d.video || "V OK";
       if (audioPriElem) audioPriElem.value = d.audioPri || "A1 OK";
@@ -455,21 +457,24 @@ function cargarDatos() {
 }
 
 function todoOK(id) {
-  if (document.getElementById(id + "-video"))
-    document.getElementById(id + "-video").value = "V OK";
-  if (document.getElementById(id + "-audioPri"))
-    document.getElementById(id + "-audioPri").value = "A1 OK";
-  if (document.getElementById(id + "-audioSec"))
-    document.getElementById(id + "-audioSec").value = "A2 OK";
-  if (document.getElementById(id + "-logo"))
-    document.getElementById(id + "-logo").value = "L OK";
-  if (document.getElementById(id + "-epg"))
-    document.getElementById(id + "-epg").value = "E OK";
+  const valores = [
+    { selector: "-video", valor: "V OK" },
+    { selector: "-audioPri", valor: "A1 OK" },
+    { selector: "-audioSec", valor: "A2 OK" },
+    { selector: "-logo", valor: "L OK" },
+    { selector: "-epg", valor: "E OK" },
+  ];
+
+  valores.forEach((item) => {
+    const element = document.getElementById(id + item.selector);
+    if (element) element.value = item.valor;
+  });
+
   actualizar(id);
 }
 
 function guardarNovedad(id, texto) {
-  let temp = JSON.parse(localStorage.getItem("novedadesTemp")) || {};
+  const temp = JSON.parse(localStorage.getItem("novedadesTemp")) || {};
   temp[id] = texto;
   localStorage.setItem("novedadesTemp", JSON.stringify(temp));
 
@@ -477,25 +482,25 @@ function guardarNovedad(id, texto) {
   Object.values(temp).forEach((val) => {
     if (val && val.trim() !== "") contNovedades++;
   });
+
   const badgeNovedades = document.getElementById("novedadesCount");
   if (badgeNovedades) badgeNovedades.innerText = contNovedades;
 }
 
 /* ================= NOC PANEL STYLING ================= */
 function actualizar(id) {
-  let card = document.getElementById("card-" + id);
+  const card = document.getElementById("card-" + id);
   if (!card) return;
 
-  let videoElem = document.getElementById(id + "-video");
-  let audioPriElem = document.getElementById(id + "-audioPri");
-  let audioSecElem = document.getElementById(id + "-audioSec");
-  let logoElem = document.getElementById(id + "-logo");
-  let epgElem = document.getElementById(id + "-epg");
+  const videoElem = document.getElementById(id + "-video");
+  const audioPriElem = document.getElementById(id + "-audioPri");
+  const audioSecElem = document.getElementById(id + "-audioSec");
+  const logoElem = document.getElementById(id + "-logo");
+  const epgElem = document.getElementById(id + "-epg");
 
-  if (!videoElem || !audioPriElem || !audioSecElem || !logoElem || !epgElem)
-    return;
+  if (!videoElem || !audioPriElem || !audioSecElem || !logoElem || !epgElem) return;
 
-  let vals = [
+  const vals = [
     videoElem.value,
     audioPriElem.value,
     audioSecElem.value,
@@ -528,12 +533,13 @@ function actualizarContadorComentariosGlobal() {
 }
 
 function agregarComentario() {
-  let input = document.getElementById("comentarioInput");
+  const input = document.getElementById("comentarioInput");
   if (!input) return;
-  let texto = input.value.trim();
+
+  const texto = input.value.trim();
   if (!texto) return;
 
-  let lista = obtenerComentarios();
+  const lista = obtenerComentarios();
   lista.push({ texto, fecha: new Date().toLocaleString() });
   localStorage.setItem("comentariosTV", JSON.stringify(lista));
   input.value = "";
@@ -548,8 +554,9 @@ function limpiarComentarios() {
 }
 
 function renderComentarios() {
-  let lista = obtenerComentarios();
+  const lista = obtenerComentarios();
   let html = "<b>Histórico:</b><br>";
+
   lista.forEach((c) => {
     html += `• ${c.texto} <small class="comentario-fecha">(${c.fecha})</small><br>`;
   });
@@ -560,22 +567,24 @@ function renderComentarios() {
 }
 
 function actualizarPanel() {
-  let total = document.querySelectorAll(".grid-canales .card").length;
-  let fallas = document.querySelectorAll(".grid-canales .card.fail").length;
-  let salud = total > 0 ? Math.round(((total - fallas) / total) * 100) : 100;
+  const total = document.querySelectorAll(".grid-canales .card").length;
+  const fallas = document.querySelectorAll(".grid-canales .card.fail").length;
+  const salud = total > 0 ? Math.round(((total - fallas) / total) * 100) : 100;
 
-  if (document.getElementById("total"))
-    document.getElementById("total").innerText = total;
-  if (document.getElementById("fallas"))
-    document.getElementById("fallas").innerText = fallas;
-  if (document.getElementById("salud"))
-    document.getElementById("salud").innerText = salud + "%";
+  const totalElem = document.getElementById("total");
+  const fallasElem = document.getElementById("fallas");
+  const saludElem = document.getElementById("salud");
+
+  if (totalElem) totalElem.innerText = total;
+  if (fallasElem) fallasElem.innerText = fallas;
+  if (saludElem) saludElem.innerText = salud + "%";
 
   let contNovedades = 0;
-  let temp = JSON.parse(localStorage.getItem("novedadesTemp")) || {};
+  const temp = JSON.parse(localStorage.getItem("novedadesTemp")) || {};
   Object.values(temp).forEach((val) => {
     if (val && val.trim() !== "") contNovedades++;
   });
+
   const badgeNovedades = document.getElementById("novedadesCount");
   if (badgeNovedades) badgeNovedades.innerText = contNovedades;
 
@@ -584,28 +593,24 @@ function actualizarPanel() {
 
 /* ================= EXPORTACIÓN E IMPORTACIÓN DE ARCHIVOS ================= */
 function exportarDatos() {
-  let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
-  let keys = Object.keys(db);
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const keys = Object.keys(db);
+
   if (keys.length === 0) {
-    alert(
-      "No hay datos guardados para exportar. Guarda primero con 'Guardar Local'.",
-    );
+    alert("No hay datos guardados para exportar. Guarda primero con 'Guardar Local'.");
     return;
   }
 
-  let stbOptions = document.querySelectorAll("#stb option");
-  let totalSTBs = stbOptions.length;
-  let fecha = new Date().toISOString().slice(0, 10);
+  const totalSTBs = document.querySelectorAll("#stb option").length;
+  const fecha = new Date().toISOString().slice(0, 10);
   let filename = `Monitoreo_TV_${fecha}.json`;
 
   if (keys.length === totalSTBs) {
     filename = `Monitoreo_TV_TODOS_${fecha}.json`;
   }
 
-  let dataStr =
-    "data:text/json;charset=utf-8," +
-    encodeURIComponent(JSON.stringify(db, null, 2));
-  let downloadAnchor = document.createElement("a");
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+  const downloadAnchor = document.createElement("a");
   downloadAnchor.setAttribute("href", dataStr);
   downloadAnchor.setAttribute("download", filename);
   document.body.appendChild(downloadAnchor);
@@ -621,53 +626,50 @@ function importar() {
 function procesarArchivoImportado(event) {
   const file = event.target.files[0];
   if (!file) return;
+
   const reader = new FileReader();
   reader.onload = function (e) {
     try {
-      let parsed = JSON.parse(e.target.result);
+      const parsed = JSON.parse(e.target.result);
       if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
         throw new Error("Formato incorrecto");
       }
 
-      let currentDb = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
-      let mergedDb = { ...currentDb, ...parsed };
+      const currentDb = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+      const mergedDb = { ...currentDb, ...parsed };
       localStorage.setItem("monitoreoTV", JSON.stringify(mergedDb, null, 2));
 
       const importedKeys = Object.keys(parsed);
       const stbSelect = document.getElementById("stb");
-      if (stbSelect && importedKeys.length > 0) {
-        if (!mergedDb[stbSelect.value]) {
-          stbSelect.value = importedKeys[0];
-        }
+      if (stbSelect && importedKeys.length > 0 && !mergedDb[stbSelect.value]) {
+        stbSelect.value = importedKeys[0];
       }
 
       cargarDatos();
-      alert(
-        `✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`,
-      );
+      alert(`✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`);
     } catch (err) {
       alert("Error: El archivo seleccionado no es un JSON válido.");
     }
   };
+
   reader.readAsText(file);
 }
 
 function exportarExcel() {
-  let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
   if (Object.keys(db).length === 0) {
     alert("No hay datos guardados para generar el reporte Excel.");
     return;
   }
 
   let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
-  csvContent +=
-    "STB,Analista,Turno,Fecha,Canal,Video,Audio Pri,Audio Sec,Logo,EPG,Novedad\n";
+  csvContent += "STB,Analista,Turno,Fecha,Canal,Video,Audio Pri,Audio Sec,Logo,EPG,Novedad\n";
 
   Object.keys(db).forEach((stbKey) => {
-    let metadata = db[stbKey].meta;
+    const metadata = db[stbKey].meta;
     if (db[stbKey].datos) {
       Object.values(db[stbKey].datos).forEach((d) => {
-        let fila = [
+        const fila = [
           stbKey,
           metadata.analista,
           metadata.turno,
@@ -687,13 +689,10 @@ function exportarExcel() {
     }
   });
 
-  let encodedUri = encodeURI(csvContent);
-  let link = document.createElement("a");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
   link.setAttribute("href", encodedUri);
-  link.setAttribute(
-    "download",
-    `Reporte_Monitoreo_${new Date().toISOString().slice(0, 10)}.csv`,
-  );
+  link.setAttribute("download", `Reporte_Monitoreo_${new Date().toISOString().slice(0, 10)}.csv`);
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -706,102 +705,92 @@ function generarPDF() {
     return;
   }
 
-  let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
-
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
   if (Object.keys(db).length === 0) {
     alert("⚠️ No hay datos guardados. Guarda primero con 'Guardar Local'.");
     return;
   }
 
   // ===== RECOPILAR DATOS DE TODOS LOS STBs =====
-  let estadisticasGlobales = {
+  const estadisticasGlobales = {
     totalSTBs: 0,
     totalCanalesPorSTB: canales.length,
     stbs: [],
   };
-
   let totalCanalesFallasGlobal = 0;
   let totalCanalesOKGlobal = 0;
-  let detallesFallasGlobal = [];
-  let detallesNovedadesGlobal = [];
-  let observacionesGlobal = [];
+  const detallesFallasGlobal = [];
+  const detallesNovedadesGlobal = [];
+  const observacionesGlobal = [];
 
-  // Iterar sobre todos los STBs
   Object.keys(db).forEach((stb) => {
-    let data = db[stb];
+    const data = db[stb];
     let canalesOK = 0;
     let canalesFallas = 0;
 
     canales.forEach((c) => {
-      let id = c.replace(/[^a-zA-Z0-9]/g, "");
-      let datosCanal = data.datos[id];
+      const id = c.replace(/[^a-zA-Z0-9]/g, "");
+      const datosCanal = data.datos[id];
 
-      if (datosCanal) {
-        let vals = [
-          datosCanal.video,
-          datosCanal.audioPri,
-          datosCanal.audioSec,
-          datosCanal.logo,
-          datosCanal.epg,
-        ];
-        let tieneError = vals.some((v) => v && v.includes("FAIL"));
+      if (!datosCanal) return;
 
-        if (tieneError) {
-          canalesFallas++;
-          totalCanalesFallasGlobal++;
-          let tiposFalla = [];
-          if (datosCanal.video && datosCanal.video.includes("FAIL"))
-            tiposFalla.push("Video");
-          if (datosCanal.audioPri && datosCanal.audioPri.includes("FAIL"))
-            tiposFalla.push("Audio Pri");
-          if (datosCanal.audioSec && datosCanal.audioSec.includes("FAIL"))
-            tiposFalla.push("Audio Sec");
-          if (datosCanal.logo && datosCanal.logo.includes("FAIL"))
-            tiposFalla.push("Logo");
-          if (datosCanal.epg && datosCanal.epg.includes("FAIL"))
-            tiposFalla.push("EPG");
+      const vals = [
+        datosCanal.video,
+        datosCanal.audioPri,
+        datosCanal.audioSec,
+        datosCanal.logo,
+        datosCanal.epg,
+      ];
+      const tieneError = vals.some((v) => v && v.includes("FAIL"));
 
-          detallesFallasGlobal.push({
-            stb: stb,
-            canal: c,
-            tipoFalla: tiposFalla.join(", "),
-            analista: data.meta.analista || "N/A",
-          });
-        } else {
-          canalesOK++;
-          totalCanalesOKGlobal++;
-        }
+      if (tieneError) {
+        canalesFallas++;
+        totalCanalesFallasGlobal++;
+        const tiposFalla = [];
+        if (datosCanal.video && datosCanal.video.includes("FAIL")) tiposFalla.push("Video");
+        if (datosCanal.audioPri && datosCanal.audioPri.includes("FAIL")) tiposFalla.push("Audio Pri");
+        if (datosCanal.audioSec && datosCanal.audioSec.includes("FAIL")) tiposFalla.push("Audio Sec");
+        if (datosCanal.logo && datosCanal.logo.includes("FAIL")) tiposFalla.push("Logo");
+        if (datosCanal.epg && datosCanal.epg.includes("FAIL")) tiposFalla.push("EPG");
 
-        if (datosCanal.novedad && datosCanal.novedad.trim()) {
-          detallesNovedadesGlobal.push({
-            stb: stb,
-            canal: c,
-            novedad: datosCanal.novedad,
-            analista: data.meta.analista || "N/A",
-          });
-        }
+        detallesFallasGlobal.push({
+          stb,
+          canal: c,
+          tipoFalla: tiposFalla.join(", "),
+          analista: data.meta.analista || "N/A",
+        });
+      } else {
+        canalesOK++;
+        totalCanalesOKGlobal++;
+      }
+
+      if (datosCanal.novedad && datosCanal.novedad.trim()) {
+        detallesNovedadesGlobal.push({
+          stb,
+          canal: c,
+          novedad: datosCanal.novedad,
+          analista: data.meta.analista || "N/A",
+        });
       }
     });
 
-    let salud =
-      canales.length > 0 ? Math.round((canalesOK / canales.length) * 100) : 100;
+    const salud = canales.length > 0 ? Math.round((canalesOK / canales.length) * 100) : 100;
 
     estadisticasGlobales.stbs.push({
       nombre: stb,
       totalCanales: canales.length,
-      canalesOK: canalesOK,
-      canalesFallas: canalesFallas,
-      salud: salud,
+      canalesOK,
+      canalesFallas,
+      salud,
       analista: data.meta.analista || "N/A",
       turno: data.meta.turno || "N/A",
       fecha: data.meta.fecha || "N/A",
     });
 
-    // Agregar comentarios
     if (data.comentarios && data.comentarios.length > 0) {
       data.comentarios.forEach((com) => {
         observacionesGlobal.push({
-          stb: stb,
+          stb,
           texto: com.texto,
           fecha: com.fecha,
           analista: data.meta.analista || "N/A",
@@ -811,30 +800,19 @@ function generarPDF() {
   });
 
   estadisticasGlobales.totalSTBs = Object.keys(db).length;
+  const totalGlobalCanales = estadisticasGlobales.totalSTBs * canales.length;
+  const saludGlobal = totalGlobalCanales > 0 ? Math.round((totalCanalesOKGlobal / totalGlobalCanales) * 100) : 100;
+  const estadoGlobal = totalCanalesFallasGlobal === 0 ? "ESTADO GENERAL: ✅ TODO OK" : "ESTADO GENERAL: ⚠️ CON FALLAS";
 
-  let totalGlobalCanales = estadisticasGlobales.totalSTBs * canales.length;
-  let saludGlobal =
-    totalGlobalCanales > 0
-      ? Math.round((totalCanalesOKGlobal / totalGlobalCanales) * 100)
-      : 100;
-  let estadoGlobal =
-    totalCanalesFallasGlobal === 0
-      ? "ESTADO GENERAL: ✅ TODO OK"
-      : "ESTADO GENERAL: ⚠️ CON FALLAS";
-
-  // ===== LLENAR HTML =====
-  document.getElementById("pdfFechaReporte").innerText =
-    new Date().toLocaleString();
+  // ===== LLENAR HTML DEL INFORME =====
+  document.getElementById("pdfFechaReporte").innerText = new Date().toLocaleString();
   document.getElementById("pdfEstadoGeneral").innerText = estadoGlobal;
-  document.getElementById("pdfTotalCanales").innerText =
-    `${estadisticasGlobales.totalSTBs} STBs (${totalGlobalCanales} canales)`;
+  document.getElementById("pdfTotalCanales").innerText = `${estadisticasGlobales.totalSTBs} STBs (${totalGlobalCanales} canales)`;
   document.getElementById("pdfCanalesOK").innerText = totalCanalesOKGlobal;
   document.getElementById("pdfPorcentajeOK").innerText = saludGlobal + "%";
-  document.getElementById("pdfCanalesFallas").innerText =
-    totalCanalesFallasGlobal;
+  document.getElementById("pdfCanalesFallas").innerText = totalCanalesFallasGlobal;
   document.getElementById("pdfSalud").innerText = saludGlobal + "%";
 
-  // Tabla STBs
   let tablaSTB = "";
   estadisticasGlobales.stbs.forEach((stbInfo) => {
     tablaSTB += `
@@ -845,12 +823,10 @@ function generarPDF() {
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #22c55e;"><b>${stbInfo.canalesOK}</b></td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #ef4444;"><b>${stbInfo.canalesFallas}</b></td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;"><b>${stbInfo.salud}%</b></td>
-      </tr>
-    `;
+      </tr>`;
   });
   document.getElementById("pdfTablaSTB").innerHTML = tablaSTB;
 
-  // Tabla Fallas Consolidada
   let tablaFallas = "";
   if (detallesFallasGlobal.length === 0) {
     tablaFallas = `<tr><td colspan="5" style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #666;">Sin fallas reportadas</td></tr>`;
@@ -862,14 +838,12 @@ function generarPDF() {
           <td style="padding: 10px; border: 1px solid #ddd; font-size: 11px;">${falla.analista}</td>
           <td style="padding: 10px; border: 1px solid #ddd; font-size: 11px;">${falla.canal}</td>
           <td style="padding: 10px; border: 1px solid #ddd; color: #ef4444; font-size: 11px;"><b>${falla.tipoFalla}</b></td>
-        </tr>
-      `;
+        </tr>`;
     });
   }
   document.getElementById("pdfTablaFallas").innerHTML = tablaFallas;
 
-  // Conclusión
-  let conclusion = `
+  const conclusion = `
     <p><b>Se evaluaron ${estadisticasGlobales.totalSTBs} STBs con un total de ${totalGlobalCanales} canales.</b></p>
     <p><b>Estado general: ${estadoGlobal.replace("ESTADO GENERAL: ", "").replace("✅ ", "").replace("⚠️ ", "")}</b></p>
     <p>El <b>${saludGlobal}%</b> de los canales se encuentra en estado OK.</p>
@@ -877,13 +851,11 @@ function generarPDF() {
   `;
   document.getElementById("pdfConclusion").innerHTML = conclusion;
 
-  // Novedades
   let novedadesHTML = "";
   if (detallesNovedadesGlobal.length === 0) {
     novedadesHTML = "<p style='color: #666;'>Sin novedades reportadas</p>";
   } else {
-    novedadesHTML =
-      "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
+    novedadesHTML = "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
     detallesNovedadesGlobal.forEach((nov) => {
       novedadesHTML += `<li style='margin-bottom: 5px;'><b>${nov.stb} (${nov.analista}):</b> ${nov.novedad}</li>`;
     });
@@ -891,14 +863,11 @@ function generarPDF() {
   }
   document.getElementById("pdfNovedades").innerHTML = novedadesHTML;
 
-  // Observaciones Consolidadas
   let observacionesHTML = "";
   if (observacionesGlobal.length === 0) {
-    observacionesHTML =
-      "<p style='color: #666;'>Sin observaciones reportadas</p>";
+    observacionesHTML = "<p style='color: #666;'>Sin observaciones reportadas</p>";
   } else {
-    observacionesHTML =
-      "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
+    observacionesHTML = "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
     observacionesGlobal.forEach((obs) => {
       observacionesHTML += `<li style='margin-bottom: 5px;'><b>${obs.stb} (${obs.analista}):</b> ${obs.texto} <span style='color: #999; font-size: 10px;'>(${obs.fecha})</span></li>`;
     });
@@ -906,7 +875,6 @@ function generarPDF() {
   }
   document.getElementById("pdfObservaciones").innerHTML = observacionesHTML;
 
-  // Hacer visible y generar PDF
   element.style.display = "block";
 
   const opt = {
@@ -926,7 +894,7 @@ function generarPDF() {
     });
 }
 
-/* ================= LIMPIAR VISTA Y RESTABLECER SITEMA ================= */
+/* ================= LIMPIAR VISTA Y RESTABLECER SISTEMA ================= */
 function limpiarVista() {
   const cards = document.querySelectorAll(".grid-canales .card");
   cards.forEach((card) => {
@@ -955,13 +923,7 @@ function limpiarVista() {
 }
 
 function resetTotal() {
-  if (
-    !confirm(
-      "⚠️ ¿Estás completamente seguro de restablecer TODO? Se borrarán el STB actual, comentarios, novedades e interfaz.",
-    )
-  ) {
-    return;
-  }
+  if (!confirm("⚠️ ¿Estás completamente seguro de restablecer TODO? Se borrarán el STB actual, comentarios, novedades e interfaz.")) return;
 
   localStorage.removeItem("monitoreoTV");
   localStorage.removeItem("comentariosTV");
