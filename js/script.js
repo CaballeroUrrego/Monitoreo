@@ -688,118 +688,158 @@ function generarPDF() {
     return;
   }
 
-  let stbSelect = document.getElementById("stb");
-  let stb = stbSelect ? stbSelect.value : "Desconocido";
   let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
-
-  if (!db[stb]) {
-    alert(
-      "⚠️ No hay datos guardados para este STB. Guarda primero con 'Guardar Local'.",
-    );
+  
+  if (Object.keys(db).length === 0) {
+    alert("⚠️ No hay datos guardados. Guarda primero con 'Guardar Local'.");
     return;
   }
 
-  let data = db[stb];
-  let analista =
-    document.getElementById("analista")?.value || data.meta.analista || "N/A";
-  let turno =
-    document.getElementById("turno")?.value || data.meta.turno || "N/A";
+  // ===== RECOPILAR DATOS DE TODOS LOS STBs =====
+  let estadisticasGlobales = {
+    totalSTBs: 0,
+    totalCanalesPorSTB: canales.length,
+    stbs: []
+  };
+  
+  let totalCanalesFallasGlobal = 0;
+  let totalCanalesOKGlobal = 0;
+  let detallesFallasGlobal = [];
+  let detallesNovedadesGlobal = [];
+  let observacionesGlobal = [];
 
-  // ===== CALCULAR ESTADÍSTICAS =====
-  let totalCanales = canales.length;
-  let canalesOK = 0;
-  let canalesFallas = 0;
-  let detallesFallas = [];
-  let detallesNovedades = [];
+  // Iterar sobre todos los STBs
+  Object.keys(db).forEach((stb) => {
+    let data = db[stb];
+    let canalesOK = 0;
+    let canalesFallas = 0;
 
-  canales.forEach((c) => {
-    let id = c.replace(/[^a-zA-Z0-9]/g, "");
-    let datosCanal = data.datos[id];
+    canales.forEach((c) => {
+      let id = c.replace(/[^a-zA-Z0-9]/g, "");
+      let datosCanal = data.datos[id];
 
-    if (datosCanal) {
-      let vals = [
-        datosCanal.video,
-        datosCanal.audioPri,
-        datosCanal.audioSec,
-        datosCanal.logo,
-        datosCanal.epg,
-      ];
-      let tieneError = vals.some((v) => v && v.includes("FAIL"));
+      if (datosCanal) {
+        let vals = [
+          datosCanal.video,
+          datosCanal.audioPri,
+          datosCanal.audioSec,
+          datosCanal.logo,
+          datosCanal.epg,
+        ];
+        let tieneError = vals.some((v) => v && v.includes("FAIL"));
 
-      if (tieneError) {
-        canalesFallas++;
-        let tiposFalla = [];
-        if (datosCanal.video && datosCanal.video.includes("FAIL"))
-          tiposFalla.push("Video");
-        if (datosCanal.audioPri && datosCanal.audioPri.includes("FAIL"))
-          tiposFalla.push("Audio Pri");
-        if (datosCanal.audioSec && datosCanal.audioSec.includes("FAIL"))
-          tiposFalla.push("Audio Sec");
-        if (datosCanal.logo && datosCanal.logo.includes("FAIL"))
-          tiposFalla.push("Logo");
-        if (datosCanal.epg && datosCanal.epg.includes("FAIL"))
-          tiposFalla.push("EPG");
+        if (tieneError) {
+          canalesFallas++;
+          totalCanalesFallasGlobal++;
+          let tiposFalla = [];
+          if (datosCanal.video && datosCanal.video.includes("FAIL"))
+            tiposFalla.push("Video");
+          if (datosCanal.audioPri && datosCanal.audioPri.includes("FAIL"))
+            tiposFalla.push("Audio Pri");
+          if (datosCanal.audioSec && datosCanal.audioSec.includes("FAIL"))
+            tiposFalla.push("Audio Sec");
+          if (datosCanal.logo && datosCanal.logo.includes("FAIL"))
+            tiposFalla.push("Logo");
+          if (datosCanal.epg && datosCanal.epg.includes("FAIL"))
+            tiposFalla.push("EPG");
 
-        detallesFallas.push({
-          canal: c,
-          tipoFalla: tiposFalla.join(", "),
-          novedad: datosCanal.novedad || "",
-        });
-      } else {
-        canalesOK++;
+          detallesFallasGlobal.push({
+            stb: stb,
+            canal: c,
+            tipoFalla: tiposFalla.join(", "),
+            analista: data.meta.analista || "N/A"
+          });
+        } else {
+          canalesOK++;
+          totalCanalesOKGlobal++;
+        }
+
+        if (datosCanal.novedad && datosCanal.novedad.trim()) {
+          detallesNovedadesGlobal.push({
+            stb: stb,
+            canal: c,
+            novedad: datosCanal.novedad,
+            analista: data.meta.analista || "N/A"
+          });
+        }
       }
+    });
 
-      if (datosCanal.novedad && datosCanal.novedad.trim()) {
-        detallesNovedades.push({
-          canal: c,
-          novedad: datosCanal.novedad,
+    let salud = canales.length > 0 
+      ? Math.round((canalesOK / canales.length) * 100) 
+      : 100;
+
+    estadisticasGlobales.stbs.push({
+      nombre: stb,
+      totalCanales: canales.length,
+      canalesOK: canalesOK,
+      canalesFallas: canalesFallas,
+      salud: salud,
+      analista: data.meta.analista || "N/A",
+      turno: data.meta.turno || "N/A",
+      fecha: data.meta.fecha || "N/A"
+    });
+
+    // Agregar comentarios
+    if (data.comentarios && data.comentarios.length > 0) {
+      data.comentarios.forEach((com) => {
+        observacionesGlobal.push({
+          stb: stb,
+          texto: com.texto,
+          fecha: com.fecha,
+          analista: data.meta.analista || "N/A"
         });
-      }
+      });
     }
   });
 
-  let salud =
-    totalCanales > 0 ? Math.round((canalesOK / totalCanales) * 100) : 100;
-  let estadoGeneral =
-    canalesFallas === 0
-      ? "ESTADO GENERAL: ✅ TODO OK"
-      : "ESTADO GENERAL: ⚠️ CON FALLAS";
+  estadisticasGlobales.totalSTBs = Object.keys(db).length;
+
+  let totalGlobalCanales = estadisticasGlobales.totalSTBs * canales.length;
+  let saludGlobal = totalGlobalCanales > 0 
+    ? Math.round((totalCanalesOKGlobal / totalGlobalCanales) * 100) 
+    : 100;
+  let estadoGlobal = totalCanalesFallasGlobal === 0
+    ? "ESTADO GENERAL: ✅ TODO OK"
+    : "ESTADO GENERAL: ⚠️ CON FALLAS";
 
   // ===== LLENAR HTML =====
-  document.getElementById("pdfFechaReporte").innerText =
-    new Date().toLocaleString();
-  document.getElementById("pdfEstadoGeneral").innerText = estadoGeneral;
-  document.getElementById("pdfTotalCanales").innerText = totalCanales;
-  document.getElementById("pdfCanalesOK").innerText = canalesOK;
-  document.getElementById("pdfPorcentajeOK").innerText =
-    Math.round((canalesOK / totalCanales) * 100) + "%";
-  document.getElementById("pdfCanalesFallas").innerText = canalesFallas;
-  document.getElementById("pdfSalud").innerText = salud + "%";
+  document.getElementById("pdfFechaReporte").innerText = new Date().toLocaleString();
+  document.getElementById("pdfEstadoGeneral").innerText = estadoGlobal;
+  document.getElementById("pdfTotalCanales").innerText = `${estadisticasGlobales.totalSTBs} STBs (${totalGlobalCanales} canales)`;
+  document.getElementById("pdfCanalesOK").innerText = totalCanalesOKGlobal;
+  document.getElementById("pdfPorcentajeOK").innerText = saludGlobal + "%";
+  document.getElementById("pdfCanalesFallas").innerText = totalCanalesFallasGlobal;
+  document.getElementById("pdfSalud").innerText = saludGlobal + "%";
 
-  // Tabla STB
-  let tablaSTB = `
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">${stb}</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${totalCanales}</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #22c55e;"><b>${canalesOK}</b></td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #ef4444;"><b>${canalesFallas}</b></td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;"><b>${salud}%</b></td>
-    </tr>
-  `;
+  // Tabla STBs
+  let tablaSTB = "";
+  estadisticasGlobales.stbs.forEach((stbInfo) => {
+    tablaSTB += `
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">${stbInfo.nombre}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${stbInfo.analista}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${stbInfo.totalCanales}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #22c55e;"><b>${stbInfo.canalesOK}</b></td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #ef4444;"><b>${stbInfo.canalesFallas}</b></td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;"><b>${stbInfo.salud}%</b></td>
+      </tr>
+    `;
+  });
   document.getElementById("pdfTablaSTB").innerHTML = tablaSTB;
 
-  // Tabla Fallas
+  // Tabla Fallas Consolidada
   let tablaFallas = "";
-  if (detallesFallas.length === 0) {
-    tablaFallas = `<tr><td colspan="4" style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #666;">Sin fallas reportadas</td></tr>`;
+  if (detallesFallasGlobal.length === 0) {
+    tablaFallas = `<tr><td colspan="5" style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #666;">Sin fallas reportadas</td></tr>`;
   } else {
-    detallesFallas.forEach((falla) => {
+    detallesFallasGlobal.forEach((falla) => {
       tablaFallas += `
         <tr>
-          <td style="padding: 10px; border: 1px solid #ddd;">${stb}</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">${falla.canal}</td>
-          <td style="padding: 10px; border: 1px solid #ddd; color: #ef4444;"><b>${falla.tipoFalla}</b></td>
-          <td style="padding: 10px; border: 1px solid #ddd;">${falla.novedad}</td>
+          <td style="padding: 10px; border: 1px solid #ddd; font-size: 11px;">${falla.stb}</td>
+          <td style="padding: 10px; border: 1px solid #ddd; font-size: 11px;">${falla.analista}</td>
+          <td style="padding: 10px; border: 1px solid #ddd; font-size: 11px;">${falla.canal}</td>
+          <td style="padding: 10px; border: 1px solid #ddd; color: #ef4444; font-size: 11px;"><b>${falla.tipoFalla}</b></td>
         </tr>
       `;
     });
@@ -808,37 +848,36 @@ function generarPDF() {
 
   // Conclusión
   let conclusion = `
-    <p><b>Durante el monitoreo se evaluaron ${totalCanales} canales.</b></p>
-    <p><b>Estado general: ${estadoGeneral.replace("ESTADO GENERAL: ", "").replace("✅ ", "").replace("⚠️ ", "")}</b></p>
-    <p>El <b>${salud}%</b> se encuentra en estado OK.</p>
-    <p>Se identificaron <b>${canalesFallas}</b> falla${canalesFallas !== 1 ? "s" : ""}.</p>
+    <p><b>Se evaluaron ${estadisticasGlobales.totalSTBs} STBs con un total de ${totalGlobalCanales} canales.</b></p>
+    <p><b>Estado general: ${estadoGlobal.replace("ESTADO GENERAL: ", "").replace("✅ ", "").replace("⚠️ ", "")}</b></p>
+    <p>El <b>${saludGlobal}%</b> de los canales se encuentra en estado OK.</p>
+    <p>Se identificaron <b>${totalCanalesFallasGlobal}</b> falla${totalCanalesFallasGlobal !== 1 ? "s" : ""} en total.</p>
   `;
   document.getElementById("pdfConclusion").innerHTML = conclusion;
 
   // Novedades
   let novedadesHTML = "";
-  if (detallesNovedades.length === 0) {
+  if (detallesNovedadesGlobal.length === 0) {
     novedadesHTML = "<p style='color: #666;'>Sin novedades reportadas</p>";
   } else {
-    novedadesHTML = "<ul style='margin: 0; padding-left: 20px;'>";
-    detallesNovedades.forEach((nov) => {
-      novedadesHTML += `<li style='margin-bottom: 5px;'><b>${nov.canal}:</b> ${nov.novedad}</li>`;
+    novedadesHTML = "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
+    detallesNovedadesGlobal.forEach((nov) => {
+      novedadesHTML += `<li style='margin-bottom: 5px;'><b>${nov.stb} (${nov.analista}):</b> ${nov.novedad}</li>`;
     });
     novedadesHTML += "</ul>";
   }
   document.getElementById("pdfNovedades").innerHTML = novedadesHTML;
 
-  // Observaciones (comentarios)
+  // Observaciones Consolidadas
   let observacionesHTML = "";
-  if (data.comentarios && data.comentarios.length > 0) {
-    observacionesHTML = "<ul style='margin: 0; padding-left: 20px;'>";
-    data.comentarios.forEach((com) => {
-      observacionesHTML += `<li style='margin-bottom: 5px;'>${com.texto} <span style='color: #999; font-size: 11px;'>(${com.fecha})</span></li>`;
+  if (observacionesGlobal.length === 0) {
+    observacionesHTML = "<p style='color: #666;'>Sin observaciones reportadas</p>";
+  } else {
+    observacionesHTML = "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
+    observacionesGlobal.forEach((obs) => {
+      observacionesHTML += `<li style='margin-bottom: 5px;'><b>${obs.stb} (${obs.analista}):</b> ${obs.texto} <span style='color: #999; font-size: 10px;'>(${obs.fecha})</span></li>`;
     });
     observacionesHTML += "</ul>";
-  } else {
-    observacionesHTML =
-      "<p style='color: #666;'>Sin observaciones reportadas</p>";
   }
   document.getElementById("pdfObservaciones").innerHTML = observacionesHTML;
 
@@ -847,7 +886,7 @@ function generarPDF() {
 
   const opt = {
     margin: 0.3,
-    filename: `Informe_Ejecutivo_${stb}_${new Date().toISOString().slice(0, 10)}.pdf`,
+    filename: `Informe_Ejecutivo_TodosSTBs_${new Date().toISOString().slice(0, 10)}.pdf`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 2, useCORS: true, allowTaint: true },
     jsPDF: { unit: "cm", format: "letter", orientation: "portrait" },
