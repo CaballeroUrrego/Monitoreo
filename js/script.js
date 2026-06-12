@@ -584,17 +584,28 @@ function actualizarPanel() {
 
 /* ================= EXPORTACIÓN E IMPORTACIÓN DE ARCHIVOS ================= */
 function exportarDatos() {
-  let db = localStorage.getItem("monitoreoTV");
-  if (!db || db === "{}") {
-    alert("No hay datos guardados para exportar.");
+  let stbSelect = document.getElementById("stb");
+  let stb = stbSelect ? stbSelect.value : "Desconocido";
+  
+  let db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  if (!db[stb]) {
+    alert("No hay datos guardados para este STB. Guarda primero con 'Guardar Local'.");
     return;
   }
-  let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(db);
+  
+  // Crear objeto con solo el STB actual
+  let exportData = {};
+  exportData[stb] = db[stb];
+  
+  let analista = document.getElementById("analista")?.value || "SinAnalista";
+  let fecha = new Date().toISOString().slice(0, 10);
+  
+  let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
   let downloadAnchor = document.createElement("a");
   downloadAnchor.setAttribute("href", dataStr);
   downloadAnchor.setAttribute(
     "download",
-    `Monitoreo_TV_${new Date().toISOString().slice(0, 10)}.json`,
+    `Monitoreo_TV_${analista}_${stb}_${fecha}.json`,
   );
   document.body.appendChild(downloadAnchor);
   downloadAnchor.click();
