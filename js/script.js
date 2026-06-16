@@ -351,7 +351,9 @@ function guardarLocal() {
 
   const stb = stbSelect.value;
   const db = JSON.parse(localStorage.getItem("monitoreoTV")) || {};
-  const novedadesTemp = JSON.parse(localStorage.getItem("novedadesTemp") || "{}");
+  const novedadesTemp = JSON.parse(
+    localStorage.getItem("novedadesTemp") || "{}",
+  );
   const datos = {};
 
   canales.forEach((c) => {
@@ -498,7 +500,8 @@ function actualizar(id) {
   const logoElem = document.getElementById(id + "-logo");
   const epgElem = document.getElementById(id + "-epg");
 
-  if (!videoElem || !audioPriElem || !audioSecElem || !logoElem || !epgElem) return;
+  if (!videoElem || !audioPriElem || !audioSecElem || !logoElem || !epgElem)
+    return;
 
   const vals = [
     videoElem.value,
@@ -597,7 +600,9 @@ function exportarDatos() {
   const keys = Object.keys(db);
 
   if (keys.length === 0) {
-    alert("No hay datos guardados para exportar. Guarda primero con 'Guardar Local'.");
+    alert(
+      "No hay datos guardados para exportar. Guarda primero con 'Guardar Local'.",
+    );
     return;
   }
 
@@ -609,7 +614,9 @@ function exportarDatos() {
     filename = `Monitoreo_TV_TODOS_${fecha}.json`;
   }
 
-  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+  const dataStr =
+    "data:text/json;charset=utf-8," +
+    encodeURIComponent(JSON.stringify(db, null, 2));
   const downloadAnchor = document.createElement("a");
   downloadAnchor.setAttribute("href", dataStr);
   downloadAnchor.setAttribute("download", filename);
@@ -646,7 +653,9 @@ function procesarArchivoImportado(event) {
       }
 
       cargarDatos();
-      alert(`✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`);
+      alert(
+        `✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`,
+      );
     } catch (err) {
       alert("Error: El archivo seleccionado no es un JSON válido.");
     }
@@ -663,7 +672,8 @@ function exportarExcel() {
   }
 
   let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
-  csvContent += "STB,Analista,Turno,Fecha,Canal,Video,Audio Pri,Audio Sec,Logo,EPG,Novedad\n";
+  csvContent +=
+    "STB,Analista,Turno,Fecha,Canal,Video,Audio Pri,Audio Sec,Logo,EPG,Novedad\n";
 
   Object.keys(db).forEach((stbKey) => {
     const metadata = db[stbKey].meta;
@@ -692,7 +702,10 @@ function exportarExcel() {
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement("a");
   link.setAttribute("href", encodedUri);
-  link.setAttribute("download", `Reporte_Monitoreo_${new Date().toISOString().slice(0, 10)}.csv`);
+  link.setAttribute(
+    "download",
+    `Reporte_Monitoreo_${new Date().toISOString().slice(0, 10)}.csv`,
+  );
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -728,66 +741,89 @@ function generarPDF() {
     let canalesOK = 0;
     let canalesFallas = 0;
 
-    canales.forEach((c) => {
-      const id = c.replace(/[^a-zA-Z0-9]/g, "");
-      const datosCanal = data.datos[id];
+    const esMonitoreado = data.meta && data.meta.analista && data.meta.analista.trim() !== "";
 
-      if (!datosCanal) return;
+    if (esMonitoreado) {
+      canales.forEach((c) => {
+        const id = c.replace(/[^a-zA-Z0-9]/g, "");
+        const datosCanal = data.datos[id];
 
-      const vals = [
-        datosCanal.video,
-        datosCanal.audioPri,
-        datosCanal.audioSec,
-        datosCanal.logo,
-        datosCanal.epg,
-      ];
-      const tieneError = vals.some((v) => v && v.includes("FAIL"));
+        if (!datosCanal) return;
 
-      if (tieneError) {
-        canalesFallas++;
-        totalCanalesFallasGlobal++;
-        const tiposFalla = [];
-        if (datosCanal.video && datosCanal.video.includes("FAIL")) tiposFalla.push("Video");
-        if (datosCanal.audioPri && datosCanal.audioPri.includes("FAIL")) tiposFalla.push("Audio Pri");
-        if (datosCanal.audioSec && datosCanal.audioSec.includes("FAIL")) tiposFalla.push("Audio Sec");
-        if (datosCanal.logo && datosCanal.logo.includes("FAIL")) tiposFalla.push("Logo");
-        if (datosCanal.epg && datosCanal.epg.includes("FAIL")) tiposFalla.push("EPG");
+        const vals = [
+          datosCanal.video,
+          datosCanal.audioPri,
+          datosCanal.audioSec,
+          datosCanal.logo,
+          datosCanal.epg,
+        ];
+        const tieneError = vals.some((v) => v && v.includes("FAIL"));
 
-        detallesFallasGlobal.push({
-          stb,
-          canal: c,
-          tipoFalla: tiposFalla.join(", "),
-          analista: data.meta.analista || "N/A",
-        });
-      } else {
-        canalesOK++;
-        totalCanalesOKGlobal++;
-      }
+        if (tieneError) {
+          canalesFallas++;
+          totalCanalesFallasGlobal++;
+          const tiposFalla = [];
+          if (datosCanal.video && datosCanal.video.includes("FAIL"))
+            tiposFalla.push("Video");
+          if (datosCanal.audioPri && datosCanal.audioPri.includes("FAIL"))
+            tiposFalla.push("Audio Pri");
+          if (datosCanal.audioSec && datosCanal.audioSec.includes("FAIL"))
+            tiposFalla.push("Audio Sec");
+          if (datosCanal.logo && datosCanal.logo.includes("FAIL"))
+            tiposFalla.push("Logo");
+          if (datosCanal.epg && datosCanal.epg.includes("FAIL"))
+            tiposFalla.push("EPG");
 
-      if (datosCanal.novedad && datosCanal.novedad.trim()) {
-        detallesNovedadesGlobal.push({
-          stb,
-          canal: c,
-          novedad: datosCanal.novedad,
-          analista: data.meta.analista || "N/A",
-        });
-      }
-    });
+          detallesFallasGlobal.push({
+            stb,
+            canal: c,
+            tipoFalla: tiposFalla.join(", "),
+            analista: data.meta.analista || "N/A",
+          });
+        } else {
+          canalesOK++;
+          totalCanalesOKGlobal++;
+        }
 
-    const salud = canales.length > 0 ? Math.round((canalesOK / canales.length) * 100) : 100;
+        if (datosCanal.novedad && datosCanal.novedad.trim()) {
+          detallesNovedadesGlobal.push({
+            stb,
+            canal: c,
+            novedad: datosCanal.novedad,
+            analista: data.meta.analista || "N/A",
+          });
+        }
+      });
 
-    estadisticasGlobales.stbs.push({
-      nombre: stb,
-      totalCanales: canales.length,
-      canalesOK,
-      canalesFallas,
-      salud,
-      analista: data.meta.analista || "N/A",
-      turno: data.meta.turno || "N/A",
-      fecha: data.meta.fecha || "N/A",
-    });
+      const salud =
+        canales.length > 0 ? Math.round((canalesOK / canales.length) * 100) : 100;
 
-    if (data.comentarios && data.comentarios.length > 0) {
+      estadisticasGlobales.stbs.push({
+        nombre: stb,
+        totalCanales: canales.length,
+        canalesOK,
+        canalesFallas,
+        salud,
+        analista: data.meta.analista || "N/A",
+        turno: data.meta.turno || "N/A",
+        fecha: data.meta.fecha || "N/A",
+        monitoreado: true
+      });
+    } else {
+      estadisticasGlobales.stbs.push({
+        nombre: stb,
+        totalCanales: canales.length,
+        canalesOK: "-",
+        canalesFallas: "-",
+        salud: "No Realizado",
+        analista: "-",
+        turno: "-",
+        fecha: "-",
+        monitoreado: false
+      });
+    }
+
+    if (data.comentarios && data.comentarios.length > 0 && esMonitoreado) {
       data.comentarios.forEach((com) => {
         observacionesGlobal.push({
           stb,
@@ -799,30 +835,44 @@ function generarPDF() {
     }
   });
 
-  estadisticasGlobales.totalSTBs = Object.keys(db).length;
+  const stbsMonitoreados = estadisticasGlobales.stbs.filter((s) => s.monitoreado);
+  estadisticasGlobales.totalSTBs = stbsMonitoreados.length;
   const totalGlobalCanales = estadisticasGlobales.totalSTBs * canales.length;
-  const saludGlobal = totalGlobalCanales > 0 ? Math.round((totalCanalesOKGlobal / totalGlobalCanales) * 100) : 100;
-  const estadoGlobal = totalCanalesFallasGlobal === 0 ? "ESTADO GENERAL: ✅ TODO OK" : "ESTADO GENERAL: ⚠️ CON FALLAS";
+  const saludGlobal =
+    totalGlobalCanales > 0
+      ? Math.round((totalCanalesOKGlobal / totalGlobalCanales) * 100)
+      : 100;
+  const estadoGlobal =
+    totalCanalesFallasGlobal === 0
+      ? "ESTADO GENERAL: ✅ TODO OK"
+      : "ESTADO GENERAL: ⚠️ CON FALLAS";
 
   // ===== LLENAR HTML DEL INFORME =====
-  document.getElementById("pdfFechaReporte").innerText = new Date().toLocaleString();
+  document.getElementById("pdfFechaReporte").innerText =
+    new Date().toLocaleString();
   document.getElementById("pdfEstadoGeneral").innerText = estadoGlobal;
-  document.getElementById("pdfTotalCanales").innerText = `${estadisticasGlobales.totalSTBs} STBs (${totalGlobalCanales} canales)`;
+  document.getElementById("pdfTotalCanales").innerText =
+    `${estadisticasGlobales.totalSTBs} STBs (${totalGlobalCanales} canales)`;
   document.getElementById("pdfCanalesOK").innerText = totalCanalesOKGlobal;
   document.getElementById("pdfPorcentajeOK").innerText = saludGlobal + "%";
-  document.getElementById("pdfCanalesFallas").innerText = totalCanalesFallasGlobal;
+  document.getElementById("pdfCanalesFallas").innerText =
+    totalCanalesFallasGlobal;
   document.getElementById("pdfSalud").innerText = saludGlobal + "%";
 
   let tablaSTB = "";
   estadisticasGlobales.stbs.forEach((stbInfo) => {
+    const okText = stbInfo.monitoreado ? `<b>${stbInfo.canalesOK}</b>` : `<span style="color: #666;">-</span>`;
+    const fallasText = stbInfo.monitoreado ? `<b>${stbInfo.canalesFallas}</b>` : `<span style="color: #666;">-</span>`;
+    const saludText = stbInfo.monitoreado ? `<b>${stbInfo.salud}%</b>` : `<span style="color: #ef4444; font-weight: bold;">No Realizado</span>`;
+
     tablaSTB += `
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;">${stbInfo.nombre}</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${stbInfo.analista}</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${stbInfo.totalCanales}</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #22c55e;"><b>${stbInfo.canalesOK}</b></td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #ef4444;"><b>${stbInfo.canalesFallas}</b></td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;"><b>${stbInfo.salud}%</b></td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #22c55e;">${okText}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #ef4444;">${fallasText}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${saludText}</td>
       </tr>`;
   });
   document.getElementById("pdfTablaSTB").innerHTML = tablaSTB;
@@ -855,7 +905,8 @@ function generarPDF() {
   if (detallesNovedadesGlobal.length === 0) {
     novedadesHTML = "<p style='color: #666;'>Sin novedades reportadas</p>";
   } else {
-    novedadesHTML = "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
+    novedadesHTML =
+      "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
     detallesNovedadesGlobal.forEach((nov) => {
       novedadesHTML += `<li style='margin-bottom: 5px;'><b>${nov.stb} (${nov.analista}):</b> ${nov.novedad}</li>`;
     });
@@ -865,9 +916,11 @@ function generarPDF() {
 
   let observacionesHTML = "";
   if (observacionesGlobal.length === 0) {
-    observacionesHTML = "<p style='color: #666;'>Sin observaciones reportadas</p>";
+    observacionesHTML =
+      "<p style='color: #666;'>Sin observaciones reportadas</p>";
   } else {
-    observacionesHTML = "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
+    observacionesHTML =
+      "<ul style='margin: 0; padding-left: 20px; font-size: 12px;'>";
     observacionesGlobal.forEach((obs) => {
       observacionesHTML += `<li style='margin-bottom: 5px;'><b>${obs.stb} (${obs.analista}):</b> ${obs.texto} <span style='color: #999; font-size: 10px;'>(${obs.fecha})</span></li>`;
     });
@@ -899,7 +952,6 @@ function limpiarVista() {
   const cards = document.querySelectorAll(".grid-canales .card");
   cards.forEach((card) => {
     card.classList.remove("ok", "fail", "warn");
-    card.classList.add("ok");
 
     card.querySelectorAll("select").forEach((select) => {
       select.selectedIndex = 0;
@@ -908,6 +960,15 @@ function limpiarVista() {
     const inputNovedad = card.querySelector("input");
     if (inputNovedad) inputNovedad.value = "";
   });
+
+  const analista = document.getElementById("analista");
+  if (analista) analista.value = "";
+
+  const turno = document.getElementById("turno");
+  if (turno) turno.value = "";
+
+  const comentarioInput = document.getElementById("comentarioInput");
+  if (comentarioInput) comentarioInput.value = "";
 
   const buscador = document.getElementById("buscadorCanal");
   if (buscador) {
@@ -919,11 +980,16 @@ function limpiarVista() {
 
   localStorage.removeItem("novedadesTemp");
   actualizarPanel();
-  alert("🧹 Vista limpia. Selectores reajustados temporalmente.");
+  alert("🧹 Vista limpia. Formulario y selectores restablecidos.");
 }
 
 function resetTotal() {
-  if (!confirm("⚠️ ¿Estás completamente seguro de restablecer TODO? Se borrarán el STB actual, comentarios, novedades e interfaz.")) return;
+  if (
+    !confirm(
+      "⚠️ ¿Estás completamente seguro de restablecer TODO? Se borrarán el STB actual, comentarios, novedades e interfaz.",
+    )
+  )
+    return;
 
   localStorage.removeItem("monitoreoTV");
   localStorage.removeItem("comentariosTV");
