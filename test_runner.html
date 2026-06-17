@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Adecco Monitoreo TV | Panel de Pruebas Automatizadas</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      padding: 30px 20px;
+    }
+
+    .test-card {
+      background-color: #1e293b;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .test-step {
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .test-step.pass {
+      background-color: rgba(34, 197, 94, 0.15);
+      border-left: 4px solid #22c55e;
+      color: #86efac;
+    }
+
+    .test-step.fail {
+      background-color: rgba(239, 68, 68, 0.15);
+      border-left: 4px solid #ef4444;
+      color: #fca5a5;
+    }
+
+    .test-step.info {
+      background-color: rgba(6, 182, 212, 0.1);
+      border-left: 4px solid #06b6d4;
+      color: #67e8f9;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .status-badge.pass {
+      background-color: #22c55e;
+      color: #ffffff;
+    }
+
+    .status-badge.fail {
+      background-color: #ef4444;
+      color: #ffffff;
+    }
+
+    /* Skeleton para simular el DOM de index.html */
+    #sandbox-wrapper {
+      display: none;
+      /* Oculto para que no interfiera visualmente con las pruebas */
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" style="max-width: 900px;">
+    <div
+      class="d-flex align-items-center justify-content-between mb-4 border-bottom border-secondary border-opacity-30 pb-3">
+      <h2><i class="fa-solid fa-vial-circle-check text-info me-2"></i> Pruebas de Funcionamiento en Vivo</h2>
+      <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-arrow-left me-1"></i> Volver a la
+        App</a>
+    </div>
+
+    <div class="test-card">
+      <h4 class="text-info mb-3"><i class="fa-solid fa-play me-2"></i> Casos de Prueba Ejecutados</h4>
+      <div id="test-results">
+        <!-- Los resultados se insertarán aquí dinámicamente -->
+      </div>
+    </div>
+
+    <div class="test-card text-center py-4">
+      <button onclick="ejecutarPruebas()" class="btn btn-info px-4 py-2 fw-semibold text-dark"><i
+          class="fa-solid fa-rotate-right me-1"></i> Volver a Ejecutar Pruebas</button>
+    </div>
+  </div>
+
+  <!-- SKELETON DOM SANDBOX (Contenedores requeridos por js/script.js) -->
+  <div id="sandbox-wrapper">
+    <select id="stb">
+      <option value="Cisco PDS2100">Cisco PDS2100</option>
+      <option value="Kaon VMM1003">Kaon VMM1003</option>
+      <option value="Kaon KSTB4193">Kaon KSTB4193</option>
+    </select>
+    <input id="analista" value="">
+    <input id="turno" value="">
+    <textarea id="comentarioInput"></textarea>
+    <div id="listaComentarios"></div>
+    <input id="buscadorCanal">
+    <button id="limpiarBuscador"></button>
+    <div id="noResults"></div>
+    <span id="novedadesCount"></span>
+    <span id="contadorComentarios"></span>
+    <span id="total"></span>
+    <span id="fallas"></span>
+    <span id="salud"></span>
+
+    <!-- Para PDF Report -->
+    <div id="pdfContent">
+      <div id="pdfFechaReporte"></div>
+      <div id="pdfEstadoGeneral"></div>
+      <div id="pdfTotalCanales"></div>
+      <div id="pdfCanalesOK"></div>
+      <div id="pdfPorcentajeOK"></div>
+      <div id="pdfCanalesFallas"></div>
+      <div id="pdfSalud"></div>
+      <div id="pdfTablaSTB"></div>
+      <div id="pdfTablaFallas"></div>
+      <div id="pdfConclusion"></div>
+      <div id="pdfNovedades"></div>
+      <div id="pdfObservaciones"></div>
+    </div>
+
+    <!-- Contenedor dinámico de canales -->
+    <div id="canales" class="grid-canales"></div>
+
+    <!-- Input oculto para carga de archivos -->
+    <input type="file" id="fileInput" />
+  </div>
+
+  <!-- Carga del script original bajo prueba -->
+  <script src="js/script.js"></script>
+
+  <!-- Script del Ejecutor de Pruebas -->
+  <script>
+    // Sobrescribir alertas del navegador para evitar interrupciones de confirmación y alerta durante el test
+    window.alert = function (msg) { console.log("[Mock Alert]: " + msg); };
+    window.confirm = function (msg) {
+      console.log("[Mock Confirm]: " + msg);
+      return true;
+    };
+
+    function logStep(desc, status, details = "") {
+      const container = document.getElementById("test-results");
+      const stepDiv = document.createElement("div");
+      stepDiv.className = `test-step ${status}`;
+      stepDiv.innerHTML = `
+        <div>
+          <strong>${desc}</strong>
+          ${details ? `<br><small class="text-muted">${details}</small>` : ""}
+        </div>
+        <span class="status-badge ${status}">${status === 'pass' ? 'Éxito' : status === 'fail' ? 'Error' : 'Info'}</span>
+      `;
+      container.appendChild(stepDiv);
+    }
+
+    function ejecutarPruebas() {
+      // Limpiar resultados anteriores
+      document.getElementById("test-results").innerHTML = "";
+
+      logStep("Iniciando suite de pruebas automatizadas...", "info");
+
+      // 1. Limpieza de base de datos de pruebas previa
+      localStorage.clear();
+      logStep("Base de datos local (localStorage) inicializada y limpia.", "pass");
+
+      // 2. Verificar Renderizado inicial
+      try {
+        render(); // Llama a la función render() cargada de js/script.js
+        const cardCount = document.querySelectorAll(".grid-canales .card").length;
+        if (cardCount === 181) {
+          logStep("Prueba 1: Renderizado inicial de canales correcto", "pass", `Se renderizaron correctamente las ${cardCount} tarjetas de canales en el DOM.`);
+        } else {
+          logStep("Prueba 1: Renderizado inicial de canales incorrecto", "fail", `Se esperaban 181 tarjetas, pero se encontraron ${cardCount}.`);
+        }
+      } catch (err) {
+        logStep("Prueba 1: Error al renderizar canales", "fail", err.message);
+      }
+
+      // 3. Verificar Limpiar Vista
+      try {
+        // Simular ingreso de datos
+        document.getElementById("analista").value = "Analista de Prueba";
+        document.getElementById("turno").value = "Turno Tarde";
+
+        // Simular que un canal tiene una falla
+        const firstCardSelect = document.querySelector(".grid-canales .card select");
+        if (firstCardSelect) {
+          firstCardSelect.selectedIndex = 1; // Cambia a FAIL
+          const firstCardId = firstCardSelect.id.split("-")[0];
+          actualizar(firstCardId); // Llama a la lógica de actualizar estado
+        }
+
+        // Ejecutar limpieza
+        limpiarVista();
+
+        const analistaValue = document.getElementById("analista").value;
+        const turnoValue = document.getElementById("turno").value;
+        const firstCard = document.querySelector(".grid-canales .card");
+        const hasColor = firstCard.classList.contains("ok") || firstCard.classList.contains("fail") || firstCard.classList.contains("warn");
+
+        if (analistaValue === "" && turnoValue === "" && !hasColor) {
+          logStep("Prueba 2: Limpiar Vista restablece inputs y clases de estado", "pass", "Los inputs de Analista/Turno fueron limpiados y los bordes de color de los canales fueron devueltos a gris neutro.");
+        } else {
+          logStep("Prueba 2: Limpiar Vista falló", "fail", `Analista: "${analistaValue}", Turno: "${turnoValue}", ¿Tiene clase de color?: ${hasColor}`);
+        }
+      } catch (err) {
+        logStep("Prueba 2: Error en Limpiar Vista", "fail", err.message);
+      }
+
+      // 4. Verificar Guardado y Carga de Monitoreo Limpio (La solución al bug del usuario)
+      try {
+        // Paso A: Seleccionar Cisco PDS2100, Limpiar Vista y Guardar Local
+        const stbSelect = document.getElementById("stb");
+        stbSelect.value = "Cisco PDS2100";
+
+        limpiarVista(); // Limpia inputs y selectores
+        guardarLocal(); // Guarda en localStorage con analista=""
+
+        // Paso B: Seleccionar Kaon VMM1003, llenar datos y guardar
+        stbSelect.value = "Kaon VMM1003";
+        document.getElementById("analista").value = "Analista Kaon";
+        document.getElementById("turno").value = "Turno Kaon";
+        guardarLocal();
+
+        // Paso C: Volver a seleccionar Cisco PDS2100 (debería cargar vacío y sin colores)
+        stbSelect.value = "Cisco PDS2100";
+        cargarDatos(); // Llama a cargar los datos de Cisco PDS2100
+
+        const analistaValue = document.getElementById("analista").value;
+        const cards = document.querySelectorAll(".grid-canales .card");
+
+        let targetCardHasColor = false;
+        cards.forEach(c => {
+          if (c.classList.contains("ok") || c.classList.contains("fail") || c.classList.contains("warn")) {
+            targetCardHasColor = true;
+          }
+        });
+
+        if (analistaValue === "" && !targetCardHasColor) {
+          logStep("Prueba 3: Carga de Monitoreo Limpio (Solución del Bug) funciona correctamente", "pass", "Al cambiar de STB y volver al Cisco PDS2100 (limpio), el sistema lo cargó correctamente sin pintar de verde las tarjetas ni rellenar campos falsos.");
+        } else {
+          logStep("Prueba 3: Carga de Monitoreo Limpio falló", "fail", `El analista no se limpió ("${analistaValue}") o los canales quedaron pintados de color (¿Color detectado?: ${targetCardHasColor}).`);
+        }
+      } catch (err) {
+        logStep("Prueba 3: Error al verificar la solución del bug", "fail", err.message);
+      }
+
+      logStep("Ejecución de pruebas finalizada.", "info");
+    }
+
+    // Ejecutar pruebas al cargar la página por primera vez
+    window.onload = function () {
+      setTimeout(ejecutarPruebas, 150);
+    };
+  </script>
+</body>
+
+</html>

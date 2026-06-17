@@ -402,9 +402,12 @@ function cargarDatos() {
 
   const stb = stbSelect.value;
   const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const data = db[stb];
+  const esMonitoreado =
+    data && data.meta && data.meta.analista && data.meta.analista.trim() !== "";
 
-  if (!db[stb]) {
-    // Si no hay datos para el STB seleccionado, resetear controles visuales.
+  if (!data || !esMonitoreado) {
+    // Si no hay datos para el STB seleccionado o el analista está vacío (monitoreo no realizado), resetear controles visuales.
     document.querySelectorAll(".grid-canales .card").forEach((c) => {
       c.classList.remove("ok", "fail", "warn");
     });
@@ -413,11 +416,16 @@ function cargarDatos() {
       const inputNovedad = card.querySelector("input");
       if (inputNovedad) inputNovedad.value = "";
     });
+
+    const analistaInput = document.getElementById("analista");
+    const turnoInput = document.getElementById("turno");
+    if (analistaInput) analistaInput.value = "";
+    if (turnoInput) turnoInput.value = "";
+
     actualizarPanel();
     return;
   }
 
-  const data = db[stb];
   const analistaInput = document.getElementById("analista");
   const turnoInput = document.getElementById("turno");
 
@@ -741,7 +749,8 @@ function generarPDF() {
     let canalesOK = 0;
     let canalesFallas = 0;
 
-    const esMonitoreado = data.meta && data.meta.analista && data.meta.analista.trim() !== "";
+    const esMonitoreado =
+      data.meta && data.meta.analista && data.meta.analista.trim() !== "";
 
     if (esMonitoreado) {
       canales.forEach((c) => {
@@ -796,7 +805,9 @@ function generarPDF() {
       });
 
       const salud =
-        canales.length > 0 ? Math.round((canalesOK / canales.length) * 100) : 100;
+        canales.length > 0
+          ? Math.round((canalesOK / canales.length) * 100)
+          : 100;
 
       estadisticasGlobales.stbs.push({
         nombre: stb,
@@ -807,7 +818,7 @@ function generarPDF() {
         analista: data.meta.analista || "N/A",
         turno: data.meta.turno || "N/A",
         fecha: data.meta.fecha || "N/A",
-        monitoreado: true
+        monitoreado: true,
       });
     } else {
       estadisticasGlobales.stbs.push({
@@ -819,7 +830,7 @@ function generarPDF() {
         analista: "-",
         turno: "-",
         fecha: "-",
-        monitoreado: false
+        monitoreado: false,
       });
     }
 
@@ -835,7 +846,9 @@ function generarPDF() {
     }
   });
 
-  const stbsMonitoreados = estadisticasGlobales.stbs.filter((s) => s.monitoreado);
+  const stbsMonitoreados = estadisticasGlobales.stbs.filter(
+    (s) => s.monitoreado,
+  );
   estadisticasGlobales.totalSTBs = stbsMonitoreados.length;
   const totalGlobalCanales = estadisticasGlobales.totalSTBs * canales.length;
   const saludGlobal =
@@ -861,9 +874,15 @@ function generarPDF() {
 
   let tablaSTB = "";
   estadisticasGlobales.stbs.forEach((stbInfo) => {
-    const okText = stbInfo.monitoreado ? `<b>${stbInfo.canalesOK}</b>` : `<span style="color: #666;">-</span>`;
-    const fallasText = stbInfo.monitoreado ? `<b>${stbInfo.canalesFallas}</b>` : `<span style="color: #666;">-</span>`;
-    const saludText = stbInfo.monitoreado ? `<b>${stbInfo.salud}%</b>` : `<span style="color: #ef4444; font-weight: bold;">No Realizado</span>`;
+    const okText = stbInfo.monitoreado
+      ? `<b>${stbInfo.canalesOK}</b>`
+      : `<span style="color: #666;">-</span>`;
+    const fallasText = stbInfo.monitoreado
+      ? `<b>${stbInfo.canalesFallas}</b>`
+      : `<span style="color: #666;">-</span>`;
+    const saludText = stbInfo.monitoreado
+      ? `<b>${stbInfo.salud}%</b>`
+      : `<span style="color: #ef4444; font-weight: bold;">No Realizado</span>`;
 
     tablaSTB += `
       <tr>
