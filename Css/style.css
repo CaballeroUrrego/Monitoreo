@@ -510,3 +510,39 @@ body {
     padding: 8px 4px;
   }
 }
+
+/* ===== SECCIÓN PROGRESO MONITOREO STBs ===== */
+.progreso-contenedor {
+  padding: 16px 16px 0 16px;
+  background-color: rgba(15, 23, 42, 0.25);
+}
+
+.progreso-box {
+  background-color: rgba(15, 23, 42, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.progreso-titulo {
+  color: #cbd5e1 !important;
+}
+
+.progreso-texto-analistas {
+  color: #cbd5e1 !important;
+  font-size: 12px;
+}
+
+.progress-custom {
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-custom {
+  width: 0%;
+  transition: width 0.6s ease;
+}
+
+.analista-ninguno {
+  font-style: italic;
+}

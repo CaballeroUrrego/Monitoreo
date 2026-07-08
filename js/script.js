@@ -192,6 +192,7 @@ let pdfChartInstance = null;
 window.addEventListener("DOMContentLoaded", () => {
   render(); // Generar la interfaz principal de canales.
   renderComentarios(); // Cargar el historial de comentarios.
+  actualizarProgresoSTB();
 
   const stbElem = document.getElementById("stb");
   if (stbElem) {
@@ -392,6 +393,7 @@ function guardarLocal(silencioso = false) {
 
   localStorage.setItem("monitoreoTV", JSON.stringify(db, null, 2));
   actualizarPanel();
+  actualizarProgresoSTB();
 
   if (!silencioso) {
     alert("✅ Datos guardados correctamente en la aplicación.");
@@ -425,6 +427,7 @@ function cargarDatos() {
     if (turnoInput) turnoInput.value = "";
 
     actualizarPanel();
+    actualizarProgresoSTB();
     return;
   }
 
@@ -487,6 +490,7 @@ function cargarDatos() {
   }
 
   actualizarPanel();
+  actualizarProgresoSTB();
 }
 
 function todoOK(id) {
@@ -625,6 +629,63 @@ function actualizarPanel() {
   actualizarContadorComentariosGlobal();
 }
 
+/* ================= PROGRESO GLOBAL DE STBs MONITOREADOS ================= */
+function actualizarProgresoSTB() {
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const stbSelect = document.getElementById("stb");
+  if (!stbSelect) return;
+
+  const options = Array.from(stbSelect.options).map(opt => opt.value || opt.text);
+  const totalSTBs = options.length;
+
+  let monitoredCount = 0;
+  const analistasSet = new Set();
+
+  options.forEach(stb => {
+    const data = db[stb];
+    const esMonitoreado = data && data.meta && data.meta.analista && data.meta.analista.trim() !== "";
+    if (esMonitoreado) {
+      monitoredCount++;
+      analistasSet.add(data.meta.analista.trim());
+    }
+  });
+
+  const porcentaje = totalSTBs > 0 ? Math.round((monitoredCount / totalSTBs) * 100) : 0;
+
+  const textoElem = document.getElementById("stbProgresoTexto");
+  const barraElem = document.getElementById("stbProgresoBarra");
+
+  if (textoElem) {
+    textoElem.innerText = `${monitoredCount} / ${totalSTBs} STBs (${porcentaje}%)`;
+  }
+  
+  if (barraElem) {
+    barraElem.style.width = `${porcentaje}%`;
+    barraElem.setAttribute("aria-valuenow", porcentaje);
+    
+    // Cambiar color de la barra según progreso
+    barraElem.className = "progress-bar progress-bar-striped progress-bar-animated";
+    if (porcentaje < 30) {
+      barraElem.classList.add("bg-danger");
+    } else if (porcentaje < 75) {
+      barraElem.classList.add("bg-warning", "text-dark");
+    } else {
+      barraElem.classList.add("bg-success");
+    }
+  }
+
+  const analistasElem = document.getElementById("analistasActivos");
+  if (analistasElem) {
+    if (analistasSet.size === 0) {
+      analistasElem.innerHTML = `<span class="text-muted analista-ninguno">Ninguno registrado aún</span>`;
+    } else {
+      analistasElem.innerHTML = Array.from(analistasSet)
+        .map(analista => `<span class="badge bg-secondary bg-opacity-25 text-white border border-secondary border-opacity-20 px-2 py-1"><i class="fa-solid fa-user-check text-success me-1"></i> ${analista}</span>`)
+        .join(" ");
+    }
+  }
+}
+
 /* ================= EXPORTACIÓN E IMPORTACIÓN DE ARCHIVOS ================= */
 function exportarDatos() {
   // Guardar datos actuales silenciosamente antes de exportar
@@ -693,6 +754,7 @@ function procesarArchivoImportado(event) {
       }
 
       cargarDatos();
+      actualizarProgresoSTB();
       alert(
         `✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`,
       );
@@ -1042,6 +1104,7 @@ function limpiarVista() {
 
   localStorage.removeItem("novedadesTemp");
   actualizarPanel();
+  actualizarProgresoSTB();
   alert("🧹 Vista limpia. Formulario y selectores restablecidos.");
 }
 
@@ -1073,5 +1136,6 @@ function resetTotal() {
   }
 
   limpiarVista();
+  actualizarProgresoSTB();
   alert("💥 Sistema completamente restablecido a cero.");
 }
