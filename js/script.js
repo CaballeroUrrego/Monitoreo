@@ -345,7 +345,7 @@ function eliminarCanal(i) {
 }
 
 /* ================= PERSISTENCIA LOCAL Y STB ================= */
-function guardarLocal() {
+function guardarLocal(silencioso = false) {
   const stbSelect = document.getElementById("stb");
   if (!stbSelect) return;
 
@@ -393,7 +393,9 @@ function guardarLocal() {
   localStorage.setItem("monitoreoTV", JSON.stringify(db, null, 2));
   actualizarPanel();
 
-  alert("✅ Datos guardados correctamente en la aplicación.");
+  if (!silencioso) {
+    alert("✅ Datos guardados correctamente en la aplicación.");
+  }
 }
 
 function cargarDatos() {
@@ -430,7 +432,28 @@ function cargarDatos() {
   const turnoInput = document.getElementById("turno");
 
   if (analistaInput) analistaInput.value = data.meta.analista || "";
-  if (turnoInput) turnoInput.value = data.meta.turno || "";
+  if (turnoInput) {
+    const val = data.meta.turno || "";
+    if (val.trim() !== "") {
+      let found = false;
+      for (let i = 0; i < turnoInput.options.length; i++) {
+        if (
+          turnoInput.options[i].value === val ||
+          turnoInput.options[i].text === val
+        ) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        const opt = document.createElement("option");
+        opt.value = val;
+        opt.text = val;
+        turnoInput.add(opt);
+      }
+    }
+    turnoInput.value = val;
+  }
 
   const novedadesTemp = {};
 
@@ -604,6 +627,9 @@ function actualizarPanel() {
 
 /* ================= EXPORTACIÓN E IMPORTACIÓN DE ARCHIVOS ================= */
 function exportarDatos() {
+  // Guardar datos actuales silenciosamente antes de exportar
+  guardarLocal(true);
+
   const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
   const keys = Object.keys(db);
 
@@ -616,10 +642,16 @@ function exportarDatos() {
 
   const totalSTBs = document.querySelectorAll("#stb option").length;
   const fecha = new Date().toISOString().slice(0, 10);
-  let filename = `Monitoreo_TV_${fecha}.json`;
+
+  // Incluir el turno en el nombre del archivo JSON exportado
+  const turnoElem = document.getElementById("turno");
+  const turno = turnoElem ? turnoElem.value.trim() : "";
+  const turnoStr = turno ? `_${turno}` : "";
+
+  let filename = `Monitoreo_TV${turnoStr}_${fecha}.json`;
 
   if (keys.length === totalSTBs) {
-    filename = `Monitoreo_TV_TODOS_${fecha}.json`;
+    filename = `Monitoreo_TV_TODOS${turnoStr}_${fecha}.json`;
   }
 
   const dataStr =
@@ -673,6 +705,8 @@ function procesarArchivoImportado(event) {
 }
 
 function exportarExcel() {
+  // Guardar datos actuales silenciosamente antes de exportar
+  guardarLocal(true);
   const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
   if (Object.keys(db).length === 0) {
     alert("No hay datos guardados para generar el reporte Excel.");
@@ -708,11 +742,17 @@ function exportarExcel() {
   });
 
   const encodedUri = encodeURI(csvContent);
+
+  // Incluir el turno en el nombre del archivo CSV exportado
+  const turnoElem = document.getElementById("turno");
+  const turno = turnoElem ? turnoElem.value.trim() : "";
+  const turnoStr = turno ? `_${turno}` : "";
+
   const link = document.createElement("a");
   link.setAttribute("href", encodedUri);
   link.setAttribute(
     "download",
-    `Reporte_Monitoreo_${new Date().toISOString().slice(0, 10)}.csv`,
+    `Reporte_Monitoreo${turnoStr}_${new Date().toISOString().slice(0, 10)}.csv`,
   );
   document.body.appendChild(link);
   link.click();
@@ -720,6 +760,9 @@ function exportarExcel() {
 }
 
 function generarPDF() {
+  // Guardar datos actuales silenciosamente antes de generar PDF
+  guardarLocal(true);
+
   const element = document.getElementById("pdfContent");
   if (!element) {
     window.print();
