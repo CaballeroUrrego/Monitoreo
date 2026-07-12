@@ -187,6 +187,7 @@ let canales = JSON.parse(localStorage.getItem("canales")) || [
 
 // Variable reservada para futuras funcionalidades de gráfico PDF.
 let pdfChartInstance = null;
+const actividadMonitoreoPorSTB = new Map();
 
 // ===== INICIALIZACIÓN =====
 window.addEventListener("DOMContentLoaded", () => {
@@ -272,17 +273,17 @@ function render() {
 
         <div class="row g-1 mb-1">
           <div class="col-4">
-            <select id="${id}-video" onchange="actualizar('${id}')">
+            <select id="${id}-video" onchange="actualizar('${id}'); marcarActividadMonitoreo('${id}')">
               <option>V OK</option><option>V FAIL</option>
             </select>
           </div>
           <div class="col-4">
-            <select id="${id}-audioPri" onchange="actualizar('${id}')">
+            <select id="${id}-audioPri" onchange="actualizar('${id}'); marcarActividadMonitoreo('${id}')">
               <option>A1 OK</option><option>A1 FAIL</option>
             </select>
           </div>
           <div class="col-4">
-            <select id="${id}-audioSec" onchange="actualizar('${id}')">
+            <select id="${id}-audioSec" onchange="actualizar('${id}'); marcarActividadMonitoreo('${id}')">
               <option>A2 OK</option><option>A2 FAIL</option><option>N/A</option>
             </select>
           </div>
@@ -290,23 +291,23 @@ function render() {
 
         <div class="row g-1 mb-2">
           <div class="col-6">
-            <select id="${id}-logo" onchange="actualizar('${id}')">
+            <select id="${id}-logo" onchange="actualizar('${id}'); marcarActividadMonitoreo('${id}')">
               <option>L OK</option><option>L FAIL</option>
             </select>
           </div>
           <div class="col-6">
-            <select id="${id}-epg" onchange="actualizar('${id}')">
+            <select id="${id}-epg" onchange="actualizar('${id}'); marcarActividadMonitoreo('${id}')">
               <option>E OK</option><option>E FAIL</option>
             </select>
           </div>
         </div>
 
         <div class="d-flex gap-1">
-          <button onclick="todoOK('${id}')" class="btn btn-success btn-sm py-1 w-100" style="font-size:11px;"><i class="fa-solid fa-check"></i> Todo OK</button>
+          <button onclick="todoOK('${id}'); marcarActividadMonitoreo('${id}')" class="btn btn-success btn-sm py-1 w-100" style="font-size:11px;"><i class="fa-solid fa-check"></i> Todo OK</button>
         </div>
 
         <div class="mt-2">
-          <input id="${id}-novedad" class="form-control form-control-sm text-white" placeholder="Novedad..." oninput="guardarNovedad('${id}', this.value)" style="font-size:11px;">
+          <input id="${id}-novedad" class="form-control form-control-sm text-white" placeholder="Novedad..." oninput="guardarNovedad('${id}', this.value); marcarActividadMonitoreo('${id}')" style="font-size:11px;">
         </div>
       </div>`;
   });
@@ -346,6 +347,59 @@ function eliminarCanal(i) {
 }
 
 /* ================= PERSISTENCIA LOCAL Y STB ================= */
+function marcarActividadMonitoreo(id = "") {
+  const stbSelect = document.getElementById("stb");
+  const stb = stbSelect?.value?.trim() || "";
+  if (!stb) return false;
+
+  actividadMonitoreoPorSTB.set(stb, true);
+  actualizarProgresoSTB();
+  return true;
+}
+
+function limpiarEstadoMonitoreo(stb = "") {
+  const target = stb || document.getElementById("stb")?.value?.trim() || "";
+  if (!target) return;
+  actividadMonitoreoPorSTB.delete(target);
+}
+
+function obtenerEstadoMonitoreo(stb = "", data = null) {
+  const targetStb = stb || document.getElementById("stb")?.value?.trim() || "";
+  if (!targetStb) return false;
+
+  if (actividadMonitoreoPorSTB.has(targetStb)) {
+    return true;
+  }
+
+  if (data?.meta?.monitoreado === true) {
+    return true;
+  }
+
+  const datos = data?.datos || {};
+  const tieneDatos = Object.values(datos).some((item) => {
+    if (!item || typeof item !== "object") return false;
+
+    const valores = [
+      item.video,
+      item.audioPri,
+      item.audioSec,
+      item.logo,
+      item.epg,
+      item.novedad,
+    ];
+
+    return valores.some((valor) => {
+      return typeof valor === "string" && valor.trim() !== "";
+    });
+  });
+
+  if (tieneDatos) {
+    return true;
+  }
+
+  return Boolean(data?.comentarios?.length);
+}
+
 function guardarLocal(silencioso = false) {
   const stbSelect = document.getElementById("stb");
   if (!stbSelect) return;
@@ -379,6 +433,7 @@ function guardarLocal(silencioso = false) {
   });
 
   const comentarios = JSON.parse(localStorage.getItem("comentariosTV")) || [];
+  const monitoreado = obtenerEstadoMonitoreo(stb, db[stb]);
 
   db[stb] = {
     meta: {
@@ -386,6 +441,7 @@ function guardarLocal(silencioso = false) {
       turno: document.getElementById("turno")?.value || "",
       stb: stb,
       fecha: new Date().toLocaleString(),
+      monitoreado,
     },
     datos,
     comentarios,
@@ -407,10 +463,8 @@ function cargarDatos() {
   const stb = stbSelect.value;
   const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
   const data = db[stb];
-  const esMonitoreado =
-    data && data.meta && data.meta.analista && data.meta.analista.trim() !== "";
 
-  if (!data || !esMonitoreado) {
+  if (!data) {
     // Si no hay datos para el STB seleccionado o el analista está vacío (monitoreo no realizado), resetear controles visuales.
     document.querySelectorAll(".grid-canales .card").forEach((c) => {
       c.classList.remove("ok", "fail", "warn");
@@ -522,6 +576,8 @@ function guardarNovedad(id, texto) {
 
   const badgeNovedades = document.getElementById("novedadesCount");
   if (badgeNovedades) badgeNovedades.innerText = contNovedades;
+
+  actualizarProgresoSTB();
 }
 
 /* ================= NOC PANEL STYLING ================= */
@@ -557,6 +613,7 @@ function actualizar(id) {
   }
 
   actualizarPanel();
+  actualizarProgresoSTB();
 }
 
 /* ================= HISTORIAL DE COMENTARIOS ================= */
@@ -635,18 +692,20 @@ function actualizarProgresoSTB() {
   const stbSelect = document.getElementById("stb");
   if (!stbSelect) return;
 
-  const options = Array.from(stbSelect.options).map(opt => opt.value || opt.text);
+  const options = Array.from(stbSelect.options).map((opt) => opt.value || opt.text);
   const totalSTBs = options.length;
 
   let monitoredCount = 0;
   const analistasSet = new Set();
 
-  options.forEach(stb => {
+  options.forEach((stb) => {
     const data = db[stb];
-    const esMonitoreado = data && data.meta && data.meta.analista && data.meta.analista.trim() !== "";
+    const esMonitoreado = obtenerEstadoMonitoreo(stb, data);
     if (esMonitoreado) {
       monitoredCount++;
-      analistasSet.add(data.meta.analista.trim());
+      if (data?.meta?.analista?.trim()) {
+        analistasSet.add(data.meta.analista.trim());
+      }
     }
   });
 
@@ -662,9 +721,10 @@ function actualizarProgresoSTB() {
   if (barraElem) {
     barraElem.style.width = `${porcentaje}%`;
     barraElem.setAttribute("aria-valuenow", porcentaje);
-    
+
     // Cambiar color de la barra según progreso
-    barraElem.className = "progress-bar progress-bar-striped progress-bar-animated";
+    barraElem.className =
+      "progress-bar progress-bar-striped progress-bar-animated progress-bar-custom";
     if (porcentaje < 30) {
       barraElem.classList.add("bg-danger");
     } else if (porcentaje < 75) {
@@ -749,11 +809,13 @@ function procesarArchivoImportado(event) {
 
       const importedKeys = Object.keys(parsed);
       const stbSelect = document.getElementById("stb");
-      if (stbSelect && importedKeys.length > 0 && !mergedDb[stbSelect.value]) {
-        stbSelect.value = importedKeys[0];
+      if (stbSelect && importedKeys.length > 0) {
+        if (!mergedDb[stbSelect.value]) {
+          stbSelect.value = importedKeys[0];
+        }
+        cargarDatos();
       }
 
-      cargarDatos();
       actualizarProgresoSTB();
       alert(
         `✅ Datos importados correctamente. STBs importados: ${importedKeys.join(", ")}`,
@@ -854,8 +916,7 @@ function generarPDF() {
     let canalesOK = 0;
     let canalesFallas = 0;
 
-    const esMonitoreado =
-      data.meta && data.meta.analista && data.meta.analista.trim() !== "";
+    const esMonitoreado = obtenerEstadoMonitoreo(stb, data);
 
     if (esMonitoreado) {
       canales.forEach((c) => {
@@ -1103,6 +1164,8 @@ function limpiarVista() {
   }
 
   localStorage.removeItem("novedadesTemp");
+  const stbSelect = document.getElementById("stb");
+  if (stbSelect) limpiarEstadoMonitoreo(stbSelect.value);
   actualizarPanel();
   actualizarProgresoSTB();
   alert("🧹 Vista limpia. Formulario y selectores restablecidos.");
@@ -1119,6 +1182,7 @@ function resetTotal() {
   localStorage.removeItem("monitoreoTV");
   localStorage.removeItem("comentariosTV");
   localStorage.removeItem("novedadesTemp");
+  actividadMonitoreoPorSTB.clear();
 
   const analistaInput = document.getElementById("analista");
   const turnoInput = document.getElementById("turno");
