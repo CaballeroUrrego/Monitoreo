@@ -1,0 +1,3284 @@
+{
+  "Cisco PDS2100": {
+    "meta": {
+      "analista": "Lucius",
+      "turno": "T1",
+      "stb": "Cisco PDS2100",
+      "fecha": "12/7/2026, 18:50:57",
+      "monitoreado": true
+    },
+    "datos": {
+      "Canal02InfoTigo": {
+        "canal": "Canal 02 - InfoTigo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal03CityTV": {
+        "canal": "Canal 03 - City TV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal04InstHD": {
+        "canal": "Canal 04 - InstHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal05TAntioqHD": {
+        "canal": "Canal 05 - TAntioqHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal06TMedellHD": {
+        "canal": "Canal 06 - TMedellHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal07CaracolHD": {
+        "canal": "Canal 07 - Caracol HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal08Canal1HD": {
+        "canal": "Canal 08 - Canal1 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal09RCNHD": {
+        "canal": "Canal 09 - RCN HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal10CosmovHD": {
+        "canal": "Canal 10 - Cosmov HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal12DisneyHD": {
+        "canal": "Canal 12 - Disney HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal13NickHD": {
+        "canal": "Canal 13 - Nick HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal14CartoonHD": {
+        "canal": "Canal 14 - Cartoon HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal15DKidsHD": {
+        "canal": "Canal 15 - D Kids HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal16DisneyJrHD": {
+        "canal": "Canal 16 - Disney Jr HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal17NickJrHD": {
+        "canal": "Canal 17 - Nick Jr HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal18CartoonitoHD": {
+        "canal": "Canal 18 - Cartoonito HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal19DREAMWHD": {
+        "canal": "Canal 19 - DREAMW HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal20TooncastHD": {
+        "canal": "Canal 20 - Tooncast HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal21BabyTV": {
+        "canal": "Canal 21 - Baby TV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal22ZooMooHD": {
+        "canal": "Canal 22 - ZooMoo HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal23PLIMPLIMHD": {
+        "canal": "Canal 23 - PLIMPLIM HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal24SenalColHD": {
+        "canal": "Canal 24 - Senal Col HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal25WinSpHD": {
+        "canal": "Canal 25 - Win SpHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal26ESPNHD": {
+        "canal": "Canal 26 - ESPN HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal27ESPN2HD": {
+        "canal": "Canal 27 - ESPN2 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal28ESPN3HD": {
+        "canal": "Canal 28 - ESPN3 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal29ESPN4HD": {
+        "canal": "Canal 29 - ESPN4 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal30ESPN5HD": {
+        "canal": "Canal 30 - ESPN5 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal31ESPN6HD": {
+        "canal": "Canal 31 - ESPN6 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal32ESPN7HD": {
+        "canal": "Canal 32 - ESPN7 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal33PXSportsHD": {
+        "canal": "Canal 33 - PXSports HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal34DBIKEHD": {
+        "canal": "Canal 34 - DBIKE HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal35PADELTVHD": {
+        "canal": "Canal 35 - PADEL TV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal36DiscoveryHD": {
+        "canal": "Canal 36 - Discovery HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal37AnimalHD": {
+        "canal": "Canal 37 - Animal HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal38LoveNatHD": {
+        "canal": "Canal 38 - LoveNat HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal39HHHD": {
+        "canal": "Canal 39 - H&H HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal40TLCHD": {
+        "canal": "Canal 40 - TLC HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal41NatGeoHD": {
+        "canal": "Canal 41 - NatGeo HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal42HistoryHD": {
+        "canal": "Canal 42 - History HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal43H2HD": {
+        "canal": "Canal 43 - H2 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal44FilmArtsHD": {
+        "canal": "Canal 44 - Film&Arts HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal45MUSEUMHD": {
+        "canal": "Canal 45 - MUSEUM HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal46VENEHD": {
+        "canal": "Canal 46 - VENE HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal47ESPORTSMHD": {
+        "canal": "Canal 47 - ESPORTSM HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal49CinecanHD": {
+        "canal": "Canal 49 - Cinecan+ HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal50UniversHD": {
+        "canal": "Canal 50 - Univers HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal51StudioUniHD": {
+        "canal": "Canal 51 - Studio Uni HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal52SONYMOVHD": {
+        "canal": "Canal 52 - SONY MOV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal53TNTHD": {
+        "canal": "Canal 53 - TNT HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal54TCM": {
+        "canal": "Canal 54 - TCM",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal55SpaceHD": {
+        "canal": "Canal 55 - Space HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal56CinemaxHD": {
+        "canal": "Canal 56 - Cinemax HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal57AMCHD57": {
+        "canal": "Canal 57 - AMC HD 57",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal58MOVIEFE": {
+        "canal": "Canal 58 - MOVIEFE",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal59DHEHD": {
+        "canal": "Canal 59 - DHE HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal60GoldenHD": {
+        "canal": "Canal 60 - Golden HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal61GoldenEdge": {
+        "canal": "Canal 61 - Golden Edge",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal62EuropaHD": {
+        "canal": "Canal 62 - Europa HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal63Eurochanne": {
+        "canal": "Canal 63 - Eurochanne",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal65DePelicula": {
+        "canal": "Canal 65 - DePelicula",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal66Multiprem": {
+        "canal": "Canal 66 - Multiprem",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal67CINELATHD": {
+        "canal": "Canal 67 - CINELAT HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal68Dcomedia": {
+        "canal": "Canal 68 - Dcomedia",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal69CINDIEFASTHD": {
+        "canal": "Canal 69 - CINDIEFAST HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal71IDHD": {
+        "canal": "Canal 71 - ID HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal72WarnerHD": {
+        "canal": "Canal 72 - Warner HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal73SonyHD": {
+        "canal": "Canal 73 - Sony HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal74AEHD": {
+        "canal": "Canal 74 - A&E HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal75StarChanHD": {
+        "canal": "Canal 75 - StarChan HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal76FXHD": {
+        "canal": "Canal 76 - FX HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal77AXNHD": {
+        "canal": "Canal 77 - AXN HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal78TNTSeries": {
+        "canal": "Canal 78 - TNT Series",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal79ADULTSWHD": {
+        "canal": "Canal 79 - ADULTSW HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal80LifetimeHD": {
+        "canal": "Canal 80 - Lifetime HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal81USANETHD": {
+        "canal": "Canal 81 - USANET HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal82ComedyHD": {
+        "canal": "Canal 82 - Comedy HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal83STARTVEHD": {
+        "canal": "Canal 83 - STARTVE HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal84A3SERHD": {
+        "canal": "Canal 84 - A3SER HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal85CaracolNovela": {
+        "canal": "Canal 85 - Caracol Novela",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal86RCNNovela": {
+        "canal": "Canal 86 - RCN Novela",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal87TLNovelas": {
+        "canal": "Canal 87 - TL Novelas",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal88TNTNOVELAS": {
+        "canal": "Canal 88 - TNT NOVELAS",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal89KanalDHD": {
+        "canal": "Canal 89 - KanalD HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal90VePlusTVHD": {
+        "canal": "Canal 90 - VePlus TV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal91PasionesHD": {
+        "canal": "Canal 91 - Pasiones HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal93NOVELISIMAHD": {
+        "canal": "Canal 93 - NOVELISIMA HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal94TeleVidHD": {
+        "canal": "Canal 94 - TeleVidHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal95EWTN": {
+        "canal": "Canal 95 - EWTN",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal96Enlace": {
+        "canal": "Canal 96 - Enlace",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal97Cristovis": {
+        "canal": "Canal 97 - Cristovis",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal98TVFamiliHD": {
+        "canal": "Canal 98 - TV Famili HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal99DAYSHD": {
+        "canal": "Canal 99 - DAYS HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal100CCongreso": {
+        "canal": "Canal 100 - CCongreso",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal101Zoom": {
+        "canal": "Canal 101 - Zoom",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal102Telecaribe": {
+        "canal": "Canal 102 - Telecaribe",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal103TPacifico": {
+        "canal": "Canal 103 - TPacifico",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal104Telecafe": {
+        "canal": "Canal 104 - Telecafe",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal105CanalCapit": {
+        "canal": "Canal 105 - CanalCapit",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal106CanalTR3CE": {
+        "canal": "Canal 106 - Canal TR3CE",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal107TRO": {
+        "canal": "Canal 107 - TRO",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal108Teleislas": {
+        "canal": "Canal 108 - Teleislas",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal109ATN": {
+        "canal": "Canal 109 - ATN",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal110Telepetrol": {
+        "canal": "Canal 110 - Telepetrol",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal111EnlaceTV": {
+        "canal": "Canal 111 - Enlace TV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal112TVC": {
+        "canal": "Canal 112 - TVC",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal113CCartagen": {
+        "canal": "Canal 113 - CCartagen",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal114CaliTV": {
+        "canal": "Canal 114 - Cali TV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal115CUniversi": {
+        "canal": "Canal 115 - C Universi",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal116Teleamiga": {
+        "canal": "Canal 116 - Teleamiga",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal117CNNEspa": {
+        "canal": "Canal 117 - CNNEspa",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal118NTN24": {
+        "canal": "Canal 118 - NTN 24",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal119ElTiempo": {
+        "canal": "Canal 119 - El Tiempo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal120Cablenotic": {
+        "canal": "Canal 120 - Cablenotic",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal121BBCNewsHD": {
+        "canal": "Canal 121 - BBCNewsHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal122CNNIntern": {
+        "canal": "Canal 122 - CNNIntern",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal123AlJazeeraHD": {
+        "canal": "Canal 123 - AlJazeera HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal125MTVHD": {
+        "canal": "Canal 125 - MTV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal128HTV": {
+        "canal": "Canal 128 - HTV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal129TelehitHD": {
+        "canal": "Canal 129 - TelehitHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal130TelehitUHD": {
+        "canal": "Canal 130 - TelehitU HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal131Migente": {
+        "canal": "Canal 131 - Migente",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal134AllegroHD": {
+        "canal": "Canal 134 - Allegro HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal135MAXANIMEHD": {
+        "canal": "Canal 135 - MAXANIME HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal136GourmetHD": {
+        "canal": "Canal 136 - Gourmet HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal137FoodNetHD": {
+        "canal": "Canal 137 - FoodNet HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal138ALACOCINA": {
+        "canal": "Canal 138 - ALACOCINA",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal141NuestraTel": {
+        "canal": "Canal 141 - NuestraTel",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal142EstrellasHD": {
+        "canal": "Canal 142 - Estrellas HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal143EEntertaHD": {
+        "canal": "Canal 143 - E!Enterta HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal144TelemundoHD": {
+        "canal": "Canal 144 - Telemundo HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal145HolaTVHD": {
+        "canal": "Canal 145 - HolaTV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal146AMCSERIESHD": {
+        "canal": "Canal 146 - AMCSERIES HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal147SHOWBUS": {
+        "canal": "Canal 147 - SHOWBUS",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal148Univision": {
+        "canal": "Canal 148 - Univision",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal149MASTALK": {
+        "canal": "Canal 149 - MASTALK",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal150CARASHD": {
+        "canal": "Canal 150 - CARAS HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal151BloombergHD": {
+        "canal": "Canal 151 - Bloomberg HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal152BitMeHD": {
+        "canal": "Canal 152 - BitMe HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal153SunHD": {
+        "canal": "Canal 153 - Sun HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal154AGROTHD": {
+        "canal": "Canal 154 - AGROT HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal155MYZENHD": {
+        "canal": "Canal 155 - MYZEN HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal156Antena3HD": {
+        "canal": "Canal 156 - Antena3 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal157DWLatin": {
+        "canal": "Canal 157 - DW Latin",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal158TVE": {
+        "canal": "Canal 158 - TVE",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal15924HSHD": {
+        "canal": "Canal 159 - 24HS HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal160France24HD": {
+        "canal": "Canal 160 - France24 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal161EURONEWSHD": {
+        "canal": "Canal 161 - EURONEWS HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal162TV5HD": {
+        "canal": "Canal 162 - TV 5 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal163UCLHD": {
+        "canal": "Canal 163 - UCL HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal164GolfChHD": {
+        "canal": "Canal 164 - GolfCh HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal165TheaterHD": {
+        "canal": "Canal 165 - Theater HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal166WorldHD": {
+        "canal": "Canal 166 - World HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal167HGTVHD": {
+        "canal": "Canal 167 - HGTV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal168ScienceHD": {
+        "canal": "Canal 168 - Science HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal169TurboHD": {
+        "canal": "Canal 169 - Turbo HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal200RCN": {
+        "canal": "Canal 200 - RCN",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal201Caracol": {
+        "canal": "Canal 201 - Caracol",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal238WinPromo": {
+        "canal": "Canal 238 - WinPromo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal239WinHD": {
+        "canal": "Canal 239 - Win + HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal240Win": {
+        "canal": "Canal 240 - Win +",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal419UnivmasPromo": {
+        "canal": "Canal 419 - Univmas Promo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal420UniPremHD": {
+        "canal": "Canal 420 - UniPrem HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal421UniCineHD": {
+        "canal": "Canal 421 - UniCine HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal422UniComHD": {
+        "canal": "Canal 422 - UniCom HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal423UniCrimeHD": {
+        "canal": "Canal 423 - UniCrime HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal424UniRealHD": {
+        "canal": "Canal 424 - UniReal HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal449HBOPromo": {
+        "canal": "Canal 449 - HBO Promo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal450HBO2HD": {
+        "canal": "Canal 450 - HBO 2 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal451HBOHD": {
+        "canal": "Canal 451 - HBO HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal453HBOHD": {
+        "canal": "Canal 453 - HBO+ HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal454HBOSignHD": {
+        "canal": "Canal 454 - HBO Sign HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal455HBOFamiHD": {
+        "canal": "Canal 455 - HBO Fami HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal457HBOXtremHD": {
+        "canal": "Canal 457 - HBO Xtrem HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal458HBOMundi": {
+        "canal": "Canal 458 - HBO Mundi",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal459HBOPopHD": {
+        "canal": "Canal 459 - HBO Pop HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal499HotPackPromo": {
+        "canal": "Canal 499 - HotPackPromo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal500PlayboyHD": {
+        "canal": "Canal 500 - Playboy HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal501SEXYHD": {
+        "canal": "Canal 501 - SEXY HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal502Venus": {
+        "canal": "Canal 502 - Venus",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal503Penthouse": {
+        "canal": "Canal 503 - Penthouse",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      }
+    },
+    "comentarios": []
+  },
+  "Kaon VMM1003": {
+    "meta": {
+      "analista": "Laura emilia ",
+      "turno": "T2",
+      "stb": "Kaon VMM1003",
+      "fecha": "12/7/2026, 18:50:39",
+      "monitoreado": true
+    },
+    "datos": {
+      "Canal02InfoTigo": {
+        "canal": "Canal 02 - InfoTigo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal03CityTV": {
+        "canal": "Canal 03 - City TV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal04InstHD": {
+        "canal": "Canal 04 - InstHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal05TAntioqHD": {
+        "canal": "Canal 05 - TAntioqHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal06TMedellHD": {
+        "canal": "Canal 06 - TMedellHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal07CaracolHD": {
+        "canal": "Canal 07 - Caracol HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal08Canal1HD": {
+        "canal": "Canal 08 - Canal1 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal09RCNHD": {
+        "canal": "Canal 09 - RCN HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal10CosmovHD": {
+        "canal": "Canal 10 - Cosmov HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal12DisneyHD": {
+        "canal": "Canal 12 - Disney HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal13NickHD": {
+        "canal": "Canal 13 - Nick HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal14CartoonHD": {
+        "canal": "Canal 14 - Cartoon HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal15DKidsHD": {
+        "canal": "Canal 15 - D Kids HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal16DisneyJrHD": {
+        "canal": "Canal 16 - Disney Jr HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal17NickJrHD": {
+        "canal": "Canal 17 - Nick Jr HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal18CartoonitoHD": {
+        "canal": "Canal 18 - Cartoonito HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal19DREAMWHD": {
+        "canal": "Canal 19 - DREAMW HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal20TooncastHD": {
+        "canal": "Canal 20 - Tooncast HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal21BabyTV": {
+        "canal": "Canal 21 - Baby TV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal22ZooMooHD": {
+        "canal": "Canal 22 - ZooMoo HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal23PLIMPLIMHD": {
+        "canal": "Canal 23 - PLIMPLIM HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal24SenalColHD": {
+        "canal": "Canal 24 - Senal Col HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal25WinSpHD": {
+        "canal": "Canal 25 - Win SpHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal26ESPNHD": {
+        "canal": "Canal 26 - ESPN HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal27ESPN2HD": {
+        "canal": "Canal 27 - ESPN2 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal28ESPN3HD": {
+        "canal": "Canal 28 - ESPN3 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal29ESPN4HD": {
+        "canal": "Canal 29 - ESPN4 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal30ESPN5HD": {
+        "canal": "Canal 30 - ESPN5 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal31ESPN6HD": {
+        "canal": "Canal 31 - ESPN6 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal32ESPN7HD": {
+        "canal": "Canal 32 - ESPN7 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal33PXSportsHD": {
+        "canal": "Canal 33 - PXSports HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal34DBIKEHD": {
+        "canal": "Canal 34 - DBIKE HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal35PADELTVHD": {
+        "canal": "Canal 35 - PADEL TV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal36DiscoveryHD": {
+        "canal": "Canal 36 - Discovery HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal37AnimalHD": {
+        "canal": "Canal 37 - Animal HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal38LoveNatHD": {
+        "canal": "Canal 38 - LoveNat HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal39HHHD": {
+        "canal": "Canal 39 - H&H HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal40TLCHD": {
+        "canal": "Canal 40 - TLC HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal41NatGeoHD": {
+        "canal": "Canal 41 - NatGeo HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal42HistoryHD": {
+        "canal": "Canal 42 - History HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal43H2HD": {
+        "canal": "Canal 43 - H2 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal44FilmArtsHD": {
+        "canal": "Canal 44 - Film&Arts HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal45MUSEUMHD": {
+        "canal": "Canal 45 - MUSEUM HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal46VENEHD": {
+        "canal": "Canal 46 - VENE HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal47ESPORTSMHD": {
+        "canal": "Canal 47 - ESPORTSM HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal49CinecanHD": {
+        "canal": "Canal 49 - Cinecan+ HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal50UniversHD": {
+        "canal": "Canal 50 - Univers HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal51StudioUniHD": {
+        "canal": "Canal 51 - Studio Uni HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal52SONYMOVHD": {
+        "canal": "Canal 52 - SONY MOV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal53TNTHD": {
+        "canal": "Canal 53 - TNT HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal54TCM": {
+        "canal": "Canal 54 - TCM",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal55SpaceHD": {
+        "canal": "Canal 55 - Space HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal56CinemaxHD": {
+        "canal": "Canal 56 - Cinemax HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal57AMCHD57": {
+        "canal": "Canal 57 - AMC HD 57",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal58MOVIEFE": {
+        "canal": "Canal 58 - MOVIEFE",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal59DHEHD": {
+        "canal": "Canal 59 - DHE HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal60GoldenHD": {
+        "canal": "Canal 60 - Golden HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal61GoldenEdge": {
+        "canal": "Canal 61 - Golden Edge",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal62EuropaHD": {
+        "canal": "Canal 62 - Europa HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal63Eurochanne": {
+        "canal": "Canal 63 - Eurochanne",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal65DePelicula": {
+        "canal": "Canal 65 - DePelicula",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal66Multiprem": {
+        "canal": "Canal 66 - Multiprem",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal67CINELATHD": {
+        "canal": "Canal 67 - CINELAT HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal68Dcomedia": {
+        "canal": "Canal 68 - Dcomedia",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal69CINDIEFASTHD": {
+        "canal": "Canal 69 - CINDIEFAST HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal71IDHD": {
+        "canal": "Canal 71 - ID HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal72WarnerHD": {
+        "canal": "Canal 72 - Warner HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal73SonyHD": {
+        "canal": "Canal 73 - Sony HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal74AEHD": {
+        "canal": "Canal 74 - A&E HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal75StarChanHD": {
+        "canal": "Canal 75 - StarChan HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal76FXHD": {
+        "canal": "Canal 76 - FX HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal77AXNHD": {
+        "canal": "Canal 77 - AXN HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal78TNTSeries": {
+        "canal": "Canal 78 - TNT Series",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal79ADULTSWHD": {
+        "canal": "Canal 79 - ADULTSW HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal80LifetimeHD": {
+        "canal": "Canal 80 - Lifetime HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal81USANETHD": {
+        "canal": "Canal 81 - USANET HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal82ComedyHD": {
+        "canal": "Canal 82 - Comedy HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal83STARTVEHD": {
+        "canal": "Canal 83 - STARTVE HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal84A3SERHD": {
+        "canal": "Canal 84 - A3SER HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal85CaracolNovela": {
+        "canal": "Canal 85 - Caracol Novela",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal86RCNNovela": {
+        "canal": "Canal 86 - RCN Novela",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal87TLNovelas": {
+        "canal": "Canal 87 - TL Novelas",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal88TNTNOVELAS": {
+        "canal": "Canal 88 - TNT NOVELAS",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal89KanalDHD": {
+        "canal": "Canal 89 - KanalD HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal90VePlusTVHD": {
+        "canal": "Canal 90 - VePlus TV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal91PasionesHD": {
+        "canal": "Canal 91 - Pasiones HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal93NOVELISIMAHD": {
+        "canal": "Canal 93 - NOVELISIMA HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal94TeleVidHD": {
+        "canal": "Canal 94 - TeleVidHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal95EWTN": {
+        "canal": "Canal 95 - EWTN",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal96Enlace": {
+        "canal": "Canal 96 - Enlace",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal97Cristovis": {
+        "canal": "Canal 97 - Cristovis",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal98TVFamiliHD": {
+        "canal": "Canal 98 - TV Famili HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal99DAYSHD": {
+        "canal": "Canal 99 - DAYS HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal100CCongreso": {
+        "canal": "Canal 100 - CCongreso",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal101Zoom": {
+        "canal": "Canal 101 - Zoom",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal102Telecaribe": {
+        "canal": "Canal 102 - Telecaribe",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal103TPacifico": {
+        "canal": "Canal 103 - TPacifico",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal104Telecafe": {
+        "canal": "Canal 104 - Telecafe",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal105CanalCapit": {
+        "canal": "Canal 105 - CanalCapit",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal106CanalTR3CE": {
+        "canal": "Canal 106 - Canal TR3CE",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal107TRO": {
+        "canal": "Canal 107 - TRO",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal108Teleislas": {
+        "canal": "Canal 108 - Teleislas",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal109ATN": {
+        "canal": "Canal 109 - ATN",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal110Telepetrol": {
+        "canal": "Canal 110 - Telepetrol",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal111EnlaceTV": {
+        "canal": "Canal 111 - Enlace TV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal112TVC": {
+        "canal": "Canal 112 - TVC",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal113CCartagen": {
+        "canal": "Canal 113 - CCartagen",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal114CaliTV": {
+        "canal": "Canal 114 - Cali TV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal115CUniversi": {
+        "canal": "Canal 115 - C Universi",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal116Teleamiga": {
+        "canal": "Canal 116 - Teleamiga",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal117CNNEspa": {
+        "canal": "Canal 117 - CNNEspa",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal118NTN24": {
+        "canal": "Canal 118 - NTN 24",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal119ElTiempo": {
+        "canal": "Canal 119 - El Tiempo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal120Cablenotic": {
+        "canal": "Canal 120 - Cablenotic",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal121BBCNewsHD": {
+        "canal": "Canal 121 - BBCNewsHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal122CNNIntern": {
+        "canal": "Canal 122 - CNNIntern",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal123AlJazeeraHD": {
+        "canal": "Canal 123 - AlJazeera HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal125MTVHD": {
+        "canal": "Canal 125 - MTV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal128HTV": {
+        "canal": "Canal 128 - HTV",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal129TelehitHD": {
+        "canal": "Canal 129 - TelehitHD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal130TelehitUHD": {
+        "canal": "Canal 130 - TelehitU HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal131Migente": {
+        "canal": "Canal 131 - Migente",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal134AllegroHD": {
+        "canal": "Canal 134 - Allegro HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal135MAXANIMEHD": {
+        "canal": "Canal 135 - MAXANIME HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal136GourmetHD": {
+        "canal": "Canal 136 - Gourmet HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal137FoodNetHD": {
+        "canal": "Canal 137 - FoodNet HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal138ALACOCINA": {
+        "canal": "Canal 138 - ALACOCINA",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal141NuestraTel": {
+        "canal": "Canal 141 - NuestraTel",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal142EstrellasHD": {
+        "canal": "Canal 142 - Estrellas HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal143EEntertaHD": {
+        "canal": "Canal 143 - E!Enterta HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal144TelemundoHD": {
+        "canal": "Canal 144 - Telemundo HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal145HolaTVHD": {
+        "canal": "Canal 145 - HolaTV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal146AMCSERIESHD": {
+        "canal": "Canal 146 - AMCSERIES HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal147SHOWBUS": {
+        "canal": "Canal 147 - SHOWBUS",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal148Univision": {
+        "canal": "Canal 148 - Univision",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal149MASTALK": {
+        "canal": "Canal 149 - MASTALK",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal150CARASHD": {
+        "canal": "Canal 150 - CARAS HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal151BloombergHD": {
+        "canal": "Canal 151 - Bloomberg HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal152BitMeHD": {
+        "canal": "Canal 152 - BitMe HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal153SunHD": {
+        "canal": "Canal 153 - Sun HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal154AGROTHD": {
+        "canal": "Canal 154 - AGROT HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal155MYZENHD": {
+        "canal": "Canal 155 - MYZEN HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal156Antena3HD": {
+        "canal": "Canal 156 - Antena3 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal157DWLatin": {
+        "canal": "Canal 157 - DW Latin",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal158TVE": {
+        "canal": "Canal 158 - TVE",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal15924HSHD": {
+        "canal": "Canal 159 - 24HS HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal160France24HD": {
+        "canal": "Canal 160 - France24 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal161EURONEWSHD": {
+        "canal": "Canal 161 - EURONEWS HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal162TV5HD": {
+        "canal": "Canal 162 - TV 5 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal163UCLHD": {
+        "canal": "Canal 163 - UCL HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal164GolfChHD": {
+        "canal": "Canal 164 - GolfCh HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal165TheaterHD": {
+        "canal": "Canal 165 - Theater HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal166WorldHD": {
+        "canal": "Canal 166 - World HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal167HGTVHD": {
+        "canal": "Canal 167 - HGTV HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal168ScienceHD": {
+        "canal": "Canal 168 - Science HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal169TurboHD": {
+        "canal": "Canal 169 - Turbo HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal200RCN": {
+        "canal": "Canal 200 - RCN",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal201Caracol": {
+        "canal": "Canal 201 - Caracol",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal238WinPromo": {
+        "canal": "Canal 238 - WinPromo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal239WinHD": {
+        "canal": "Canal 239 - Win + HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal240Win": {
+        "canal": "Canal 240 - Win +",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal419UnivmasPromo": {
+        "canal": "Canal 419 - Univmas Promo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal420UniPremHD": {
+        "canal": "Canal 420 - UniPrem HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal421UniCineHD": {
+        "canal": "Canal 421 - UniCine HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal422UniComHD": {
+        "canal": "Canal 422 - UniCom HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal423UniCrimeHD": {
+        "canal": "Canal 423 - UniCrime HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal424UniRealHD": {
+        "canal": "Canal 424 - UniReal HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal449HBOPromo": {
+        "canal": "Canal 449 - HBO Promo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal450HBO2HD": {
+        "canal": "Canal 450 - HBO 2 HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal451HBOHD": {
+        "canal": "Canal 451 - HBO HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal453HBOHD": {
+        "canal": "Canal 453 - HBO+ HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal454HBOSignHD": {
+        "canal": "Canal 454 - HBO Sign HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal455HBOFamiHD": {
+        "canal": "Canal 455 - HBO Fami HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal457HBOXtremHD": {
+        "canal": "Canal 457 - HBO Xtrem HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal458HBOMundi": {
+        "canal": "Canal 458 - HBO Mundi",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 OK",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal459HBOPopHD": {
+        "canal": "Canal 459 - HBO Pop HD",
+        "video": "V FAIL",
+        "audioPri": "A1 FAIL",
+        "audioSec": "A2 FAIL",
+        "logo": "L FAIL",
+        "epg": "E FAIL",
+        "novedad": ""
+      },
+      "Canal499HotPackPromo": {
+        "canal": "Canal 499 - HotPackPromo",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 FAIL",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal500PlayboyHD": {
+        "canal": "Canal 500 - Playboy HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal501SEXYHD": {
+        "canal": "Canal 501 - SEXY HD",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal502Venus": {
+        "canal": "Canal 502 - Venus",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "N/A",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      },
+      "Canal503Penthouse": {
+        "canal": "Canal 503 - Penthouse",
+        "video": "V OK",
+        "audioPri": "A1 OK",
+        "audioSec": "A2 FAIL",
+        "logo": "L OK",
+        "epg": "E OK",
+        "novedad": ""
+      }
+    },
+    "comentarios": []
+  }
+}
