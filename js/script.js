@@ -692,7 +692,9 @@ function actualizarProgresoSTB() {
   const stbSelect = document.getElementById("stb");
   if (!stbSelect) return;
 
-  const options = Array.from(stbSelect.options).map((opt) => opt.value || opt.text);
+  const options = Array.from(stbSelect.options).map(
+    (opt) => opt.value || opt.text,
+  );
   const totalSTBs = options.length;
 
   let monitoredCount = 0;
@@ -709,7 +711,8 @@ function actualizarProgresoSTB() {
     }
   });
 
-  const porcentaje = totalSTBs > 0 ? Math.round((monitoredCount / totalSTBs) * 100) : 0;
+  const porcentaje =
+    totalSTBs > 0 ? Math.round((monitoredCount / totalSTBs) * 100) : 0;
 
   const textoElem = document.getElementById("stbProgresoTexto");
   const barraElem = document.getElementById("stbProgresoBarra");
@@ -717,7 +720,7 @@ function actualizarProgresoSTB() {
   if (textoElem) {
     textoElem.innerText = `${monitoredCount} / ${totalSTBs} STBs (${porcentaje}%)`;
   }
-  
+
   if (barraElem) {
     barraElem.style.width = `${porcentaje}%`;
     barraElem.setAttribute("aria-valuenow", porcentaje);
@@ -740,7 +743,10 @@ function actualizarProgresoSTB() {
       analistasElem.innerHTML = `<span class="text-muted analista-ninguno">Ninguno registrado aún</span>`;
     } else {
       analistasElem.innerHTML = Array.from(analistasSet)
-        .map(analista => `<span class="badge bg-secondary bg-opacity-25 text-white border border-secondary border-opacity-20 px-2 py-1"><i class="fa-solid fa-user-check text-success me-1"></i> ${analista}</span>`)
+        .map(
+          (analista) =>
+            `<span class="badge bg-secondary bg-opacity-25 text-white border border-secondary border-opacity-20 px-2 py-1"><i class="fa-solid fa-user-check text-success me-1"></i> ${analista}</span>`,
+        )
         .join(" ");
     }
   }
