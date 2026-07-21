@@ -200,6 +200,17 @@ window.addEventListener("DOMContentLoaded", () => {
     stbElem.addEventListener("change", cargarDatos);
   }
 
+  // Evitar que se introduzca texto o números mediante el teclado en el selector de Turno
+  const turnoElem = document.getElementById("turno");
+  if (turnoElem) {
+    turnoElem.addEventListener("keydown", (e) => {
+      // Bloquear teclas que producen caracteres (letras, números, símbolos) excepto el espacio para abrir el selector
+      if (e.key.length === 1 && e.key !== " ") {
+        e.preventDefault();
+      }
+    });
+  }
+
   // Vincular el input oculto para importar archivos JSON.
   const fileInput = document.getElementById("fileInput");
   if (fileInput) {
@@ -478,7 +489,7 @@ function cargarDatos() {
     const analistaInput = document.getElementById("analista");
     const turnoInput = document.getElementById("turno");
     if (analistaInput) analistaInput.value = "";
-    if (turnoInput) turnoInput.value = "";
+    if (turnoInput) turnoInput.selectedIndex = 0;
 
     actualizarPanel();
     actualizarProgresoSTB();
@@ -508,8 +519,10 @@ function cargarDatos() {
         opt.text = val;
         turnoInput.add(opt);
       }
+      turnoInput.value = val;
+    } else {
+      turnoInput.selectedIndex = 0;
     }
-    turnoInput.value = val;
   }
 
   const novedadesTemp = {};
@@ -1156,7 +1169,7 @@ function limpiarVista() {
   if (analista) analista.value = "";
 
   const turno = document.getElementById("turno");
-  if (turno) turno.value = "";
+  if (turno) turno.selectedIndex = 0;
 
   const comentarioInput = document.getElementById("comentarioInput");
   if (comentarioInput) comentarioInput.value = "";
@@ -1196,7 +1209,7 @@ function resetTotal() {
   const comentarioInput = document.getElementById("comentarioInput");
 
   if (analistaInput) analistaInput.value = "";
-  if (turnoInput) turnoInput.value = "";
+  if (turnoInput) turnoInput.selectedIndex = 0;
   if (stbSelect) stbSelect.selectedIndex = 0;
   if (comentarioInput) comentarioInput.value = "";
 
