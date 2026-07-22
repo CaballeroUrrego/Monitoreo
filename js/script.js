@@ -444,10 +444,16 @@ function guardarLocal(silencioso = false) {
   });
 
   const comentarios = JSON.parse(localStorage.getItem("comentariosTV")) || [];
-  const monitoreado = obtenerEstadoMonitoreo(stb, db[stb]);
+  const informeActual = db[stb] || {};
+  const historicoPersistido = Array.isArray(informeActual.historico)
+    ? informeActual.historico
+    : [];
+  const monitoreado = obtenerEstadoMonitoreo(stb, informeActual);
 
   db[stb] = {
+    ...informeActual,
     meta: {
+      ...(informeActual.meta || {}),
       analista: document.getElementById("analista")?.value || "",
       turno: document.getElementById("turno")?.value || "",
       stb: stb,
@@ -455,10 +461,14 @@ function guardarLocal(silencioso = false) {
       monitoreado,
     },
     datos,
-    comentarios,
+    comentarios: Array.isArray(informeActual.comentarios)
+      ? informeActual.comentarios
+      : comentarios,
+    historico: historicoPersistido,
   };
 
   localStorage.setItem("monitoreoTV", JSON.stringify(db, null, 2));
+  renderTrazabilidad(stb);
   actualizarPanel();
   actualizarProgresoSTB();
 
@@ -490,6 +500,13 @@ function cargarDatos() {
     const turnoInput = document.getElementById("turno");
     if (analistaInput) analistaInput.value = "";
     if (turnoInput) turnoInput.selectedIndex = 0;
+
+    const obsInput = document.getElementById("gestionObservacion");
+    const sigInput = document.getElementById("gestionSiguiente");
+    if (obsInput) obsInput.value = "";
+    if (sigInput) sigInput.value = "";
+
+    renderTrazabilidad(stb);
 
     actualizarPanel();
     actualizarProgresoSTB();
@@ -555,6 +572,21 @@ function cargarDatos() {
     localStorage.setItem("comentariosTV", JSON.stringify(data.comentarios));
     renderComentarios();
   }
+
+  const sigInput = document.getElementById("gestionSiguiente");
+  if (sigInput) {
+    const ultimoRegistro =
+      Array.isArray(data.historico) && data.historico.length > 0
+        ? data.historico[data.historico.length - 1]
+        : null;
+    const continuidad =
+      ultimoRegistro?.siguienteAnalista && ultimoRegistro.siguienteAnalista !== "N/A"
+        ? ultimoRegistro.siguienteAnalista
+        : "";
+    sigInput.value = continuidad;
+  }
+
+  renderTrazabilidad(stb);
 
   actualizarPanel();
   actualizarProgresoSTB();
@@ -1097,6 +1129,34 @@ function generarPDF() {
   }
   document.getElementById("pdfTablaFallas").innerHTML = tablaFallas;
 
+  let tablaHistorico = "";
+  let tieneHistoricoGlobal = false;
+  Object.keys(db).forEach((stbKey) => {
+    const data = db[stbKey];
+    if (data && data.historico && data.historico.length > 0) {
+      tieneHistoricoGlobal = true;
+      data.historico.forEach((h) => {
+        tablaHistorico += `
+          <tr>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${stbKey}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px; font-family: monospace;">${h.timestamp}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.analistaGestion}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.observaciones}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.ultimoRevisor}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.siguienteAnalista}</td>
+          </tr>`;
+      });
+    }
+  });
+
+  if (!tieneHistoricoGlobal) {
+    tablaHistorico = `
+      <tr>
+        <td colspan="6" style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #666; font-size: 11px;">Sin historial registrado</td>
+      </tr>`;
+  }
+  document.getElementById("pdfTablaHistorico").innerHTML = tablaHistorico;
+
   const conclusion = `
     <p><b>Se evaluaron ${estadisticasGlobales.totalSTBs} STBs con un total de ${totalGlobalCanales} canales.</b></p>
     <p><b>Estado general: ${estadoGlobal.replace("ESTADO GENERAL: ", "").replace("✅ ", "").replace("⚠️ ", "")}</b></p>
@@ -1184,7 +1244,14 @@ function limpiarVista() {
 
   localStorage.removeItem("novedadesTemp");
   const stbSelect = document.getElementById("stb");
-  if (stbSelect) limpiarEstadoMonitoreo(stbSelect.value);
+  if (stbSelect) {
+    limpiarEstadoMonitoreo(stbSelect.value);
+    const obsInput = document.getElementById("gestionObservacion");
+    const sigInput = document.getElementById("gestionSiguiente");
+    if (obsInput) obsInput.value = "";
+    if (sigInput) sigInput.value = "";
+    renderTrazabilidad(stbSelect.value);
+  }
   actualizarPanel();
   actualizarProgresoSTB();
   alert("🧹 Vista limpia. Formulario y selectores restablecidos.");
@@ -1213,6 +1280,19 @@ function resetTotal() {
   if (stbSelect) stbSelect.selectedIndex = 0;
   if (comentarioInput) comentarioInput.value = "";
 
+  const obsInput = document.getElementById("gestionObservacion");
+  const sigInput = document.getElementById("gestionSiguiente");
+  if (obsInput) obsInput.value = "";
+  if (sigInput) sigInput.value = "";
+
+  const tbody = document.getElementById("tablaTrazabilidadCuerpo");
+  if (tbody) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="text-center text-muted py-3">Sin registros de auditoría para este STB.</td>
+      </tr>`;
+  }
+
   const listaComentarios = document.getElementById("listaComentarios");
   if (listaComentarios) {
     listaComentarios.innerHTML = "<b>Histórico:</b><br>";
@@ -1221,4 +1301,133 @@ function resetTotal() {
   limpiarVista();
   actualizarProgresoSTB();
   alert("💥 Sistema completamente restablecido a cero.");
+}
+
+/* ================= REGISTRO DE GESTIÓN Y TRAZABILIDAD ================= */
+function registrarGestion() {
+  const stbSelect = document.getElementById("stb");
+  if (!stbSelect) return;
+  const stb = stbSelect.value;
+
+  const analistaInput = document.getElementById("analista");
+  const analista = analistaInput ? analistaInput.value.trim() : "";
+  
+  if (!analista) {
+    alert("⚠️ Por favor ingrese el nombre del Analista antes de registrar la gestión.");
+    if (analistaInput) analistaInput.focus();
+    return;
+  }
+
+  const obsInput = document.getElementById("gestionObservacion");
+  const sigInput = document.getElementById("gestionSiguiente");
+  
+  const observaciones = obsInput ? obsInput.value.trim() : "";
+  const siguienteAnalista = sigInput ? sigInput.value.trim() : "";
+
+  if (!observaciones && !siguienteAnalista) {
+    alert("⚠️ Debe ingresar una Observación o el nombre del Siguiente Analista para estampar la gestión.");
+    return;
+  }
+
+  const db = JSON.parse(localStorage.getItem("monitoreoTV")) || {};
+  
+  // Si no existen datos guardados aún para este STB en db, los inicializamos
+  if (!db[stb]) {
+    db[stb] = {
+      meta: {
+        analista: analista,
+        turno: document.getElementById("turno")?.value || "T1",
+        stb: stb,
+        fecha: new Date().toLocaleString(),
+        monitoreado: false
+      },
+      datos: {},
+      comentarios: []
+    };
+  }
+
+  // Inicializar el histórico si no existe
+  if (!db[stb].historico) {
+    db[stb].historico = [];
+  }
+
+  const historialPrevio = Array.isArray(db[stb].historico)
+    ? db[stb].historico
+    : [];
+  const ultimoRegistroPrevio = historialPrevio[historialPrevio.length - 1];
+  const ultimoRevisor = ultimoRegistroPrevio?.analistaGestion || analista;
+
+  // Crear el nuevo registro de gestión
+  const nuevoRegistro = {
+    timestamp: new Date().toLocaleString(),
+    controlTemporal: new Date().toLocaleString("es-ES", {
+      dateStyle: "short",
+      timeStyle: "medium",
+    }),
+    analistaGestion: analista,
+    observaciones: observaciones || "Revisión / Gestión realizada",
+    ultimoRevisor,
+    siguienteAnalista: siguienteAnalista || "N/A",
+  };
+
+  historialPrevio.push(nuevoRegistro);
+  db[stb].historico = historialPrevio;
+  db[stb].meta = {
+    ...(db[stb].meta || {}),
+    analista,
+    turno: document.getElementById("turno")?.value || db[stb].meta?.turno || "",
+    stb,
+    fecha: new Date().toLocaleString(),
+    ultimoRevisor,
+    monitoreado: true,
+  };
+
+  // Guardar en localStorage
+  localStorage.setItem("monitoreoTV", JSON.stringify(db, null, 2));
+
+  // Limpiar campos del formulario de trazabilidad
+  if (obsInput) obsInput.value = "";
+  if (sigInput) sigInput.value = "";
+
+  // Renderizar la tabla de trazabilidad
+  renderTrazabilidad(stb);
+  
+  // Actualizar paneles y guardar estado
+  actualizarPanel();
+  actualizarProgresoSTB();
+
+  alert("⏱️ Gestión estampada en el histórico correctamente.");
+}
+
+function renderTrazabilidad(stb) {
+  const tbody = document.getElementById("tablaTrazabilidadCuerpo");
+  if (!tbody) return;
+
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const data = db[stb];
+
+  if (!data || !data.historico || data.historico.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="text-center text-muted py-3">Sin registros de auditoría para este STB.</td>
+      </tr>`;
+    return;
+  }
+
+  let html = "";
+  // Mostrar los registros del más reciente al más antiguo para visualización óptima
+  const historicoReversado = [...data.historico].reverse();
+  
+  historicoReversado.forEach((h) => {
+    html += `
+      <tr>
+        <td class="text-info font-monospace" style="font-size: 12px; white-space: nowrap;">${h.controlTemporal || h.timestamp}</td>
+        <td><span class="badge-analista-gestion">${h.analistaGestion}</span></td>
+        <td class="text-wrap">${h.observaciones}</td>
+        <td><span class="badge-revisor">${h.ultimoRevisor}</span></td>
+        <td class="text-warning font-semibold">${h.siguienteAnalista}</td>
+      </tr>`;
+  });
+
+  tbody.innerHTML = html;
 }

@@ -252,6 +252,49 @@
     </div>
 
     <div class="container-fluid p-4">
+      <!-- PANEL DE HISTORIAL Y TRAZABILIDAD DE GESTIÓN POR ANALISTA -->
+      <div class="trazabilidad-box p-3 mb-4">
+        <h5 class="text-white mb-3 d-flex align-items-center">
+          <i class="fa-solid fa-clock-rotate-left text-info me-2"></i> 
+          Historial y Auditoría de Gestión por Analista
+        </h5>
+        
+        <div class="row g-3 align-items-end mb-3">
+          <div class="col-md-7">
+            <label class="form-label small text-muted mb-1">Observación / Gestión Realizada</label>
+            <textarea id="gestionObservacion" class="form-control form-control-sm" rows="2" placeholder="Describa brevemente la gestión o validación realizada sobre este STB..."></textarea>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small text-muted mb-1">Siguiente Analista (Continuidad)</label>
+            <input id="gestionSiguiente" class="form-control form-control-sm" placeholder="Nombre del siguiente analista..." />
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-stamp btn-sm w-100 py-2 fw-semibold text-white d-flex align-items-center justify-content-center gap-2" onclick="registrarGestion()">
+              <i class="fa-solid fa-stamp"></i> Estampar Gestión
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive bg-dark bg-opacity-20 rounded border border-secondary border-opacity-10" style="max-height: 200px; overflow-y: auto;">
+          <table class="trazabilidad-table m-0">
+            <thead>
+              <tr>
+                <th>Control Temporal</th>
+                <th>Analista de Gestión</th>
+                <th>Observación / Gestión</th>
+                <th>Último Revisor</th>
+                <th>Siguiente Analista</th>
+              </tr>
+            </thead>
+            <tbody id="tablaTrazabilidadCuerpo">
+              <tr>
+                <td colspan="5" class="text-center text-muted py-3">Sin registros de auditoría para este STB.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div id="noResults" class="text-center text-muted py-5 d-none">
         <i class="fa-solid fa-tv-slash display-4 mb-3 text-secondary"></i>
         <p class="lead">
@@ -316,6 +359,29 @@
         </thead>
         <tbody id="pdfTablaFallas"></tbody>
       </table>
+
+      <div class="pdf-section blue">
+        <h4 class="pdf-section-title blue">
+          <i class="pdf-icon">⏱️</i> Trazabilidad e Historial de Gestión
+        </h4>
+        <table class="pdf-table" style="font-size: 11px;">
+          <thead>
+            <tr>
+              <th style="font-size: 11px; padding: 6px 10px;">STB</th>
+              <th style="font-size: 11px; padding: 6px 10px;">Control Temporal</th>
+              <th style="font-size: 11px; padding: 6px 10px;">Analista Gestión</th>
+              <th style="font-size: 11px; padding: 6px 10px;">Gestión / Observación</th>
+              <th style="font-size: 11px; padding: 6px 10px;">Último Revisor</th>
+              <th style="font-size: 11px; padding: 6px 10px;">Siguiente Analista</th>
+            </tr>
+          </thead>
+          <tbody id="pdfTablaHistorico">
+            <tr>
+              <td colspan="6" style="text-align: center; color: #666; padding: 10px;">Sin historial registrado</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <div class="pdf-section red">
         <h3 class="pdf-section-title red">
