@@ -191,6 +191,7 @@ const actividadMonitoreoPorSTB = new Map();
 
 // ===== INICIALIZACIÓN =====
 window.addEventListener("DOMContentLoaded", () => {
+  sincronizarOpcionesSTB();
   render(); // Generar la interfaz principal de canales.
   renderComentarios(); // Cargar el historial de comentarios.
   actualizarProgresoSTB();
@@ -219,6 +220,55 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ================= FILTRADO DE CANALES ================= */
+function sincronizarOpcionesSTB() {
+  const stbSelect = document.getElementById("stb");
+  const turnoSelect = document.getElementById("turno");
+  if (!stbSelect) return;
+
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const stbsExistentes = new Set(
+    Array.from(stbSelect.options).map((opt) => opt.value || opt.text),
+  );
+
+  Object.keys(db).forEach((stb) => {
+    if (!stbsExistentes.has(stb)) {
+      const option = document.createElement("option");
+      option.value = stb;
+      option.text = stb;
+      stbSelect.add(option);
+      stbsExistentes.add(stb);
+    }
+  });
+
+  if (turnoSelect) {
+    const turnosExistentes = new Set(
+      Array.from(turnoSelect.options).map((opt) => opt.value || opt.text),
+    );
+
+    Object.keys(db).forEach((stb) => {
+      const metaTurno = db[stb]?.meta?.turno?.trim();
+      if (metaTurno && !turnosExistentes.has(metaTurno)) {
+        const option = document.createElement("option");
+        option.value = metaTurno;
+        option.text = metaTurno;
+        turnoSelect.add(option);
+        turnosExistentes.add(metaTurno);
+      }
+
+      (db[stb]?.historico || []).forEach((registro) => {
+        const turnoRegistro = registro?.turno?.trim();
+        if (turnoRegistro && !turnosExistentes.has(turnoRegistro)) {
+          const option = document.createElement("option");
+          option.value = turnoRegistro;
+          option.text = turnoRegistro;
+          turnoSelect.add(option);
+          turnosExistentes.add(turnoRegistro);
+        }
+      });
+    });
+  }
+}
+
 function inicializarBuscador() {
   const buscador = document.getElementById("buscadorCanal");
   const btnLimpiar = document.getElementById("limpiarBuscador");
@@ -411,9 +461,56 @@ function obtenerEstadoMonitoreo(stb = "", data = null) {
   return Boolean(data?.comentarios?.length);
 }
 
+function crearRegistroHistoricoDesdeEstado({
+  analista = "",
+  turno = "",
+  observaciones = "",
+  siguienteAnalista = "N/A",
+  tipo = "guardado",
+  progreso = {},
+  historicoPrevio = [],
+  timestamp = new Date().toISOString(),
+}) {
+  const ultimoRegistroPrevio = historicoPrevio[historicoPrevio.length - 1];
+  const ultimoRevisor =
+    ultimoRegistroPrevio?.analistaGestion || analista || "Sistema";
+
+  const fechaObjeto = new Date(timestamp);
+  const fechaValida = Number.isNaN(fechaObjeto.getTime())
+    ? new Date()
+    : fechaObjeto;
+
+  return {
+    timestamp: fechaValida.toISOString(),
+    controlTemporal: fechaValida.toLocaleString("es-ES", {
+      dateStyle: "short",
+      timeStyle: "medium",
+    }),
+    turno: turno || "Sin turno",
+    analistaGestion: analista || "Sistema",
+    observaciones:
+      observaciones ||
+      (tipo === "guardado"
+        ? "Registro automático de progreso del monitoreo"
+        : "Gestión registrada"),
+    ultimoRevisor,
+    siguienteAnalista: siguienteAnalista || "N/A",
+    tipo,
+    progreso: {
+      monitoreado: Boolean(progreso.monitoreado),
+      totalCanales: Number(progreso.totalCanales || 0),
+      fallas: Number(progreso.fallas || 0),
+      salud: Number(progreso.salud || 0),
+      novedades: Number(progreso.novedades || 0),
+    },
+  };
+}
+
 function guardarLocal(silencioso = false) {
   const stbSelect = document.getElementById("stb");
   if (!stbSelect) return;
+
+  sincronizarOpcionesSTB();
 
   const stb = stbSelect.value;
   const db = JSON.parse(localStorage.getItem("monitoreoTV")) || {};
@@ -444,21 +541,79 @@ function guardarLocal(silencioso = false) {
   });
 
   const comentarios = JSON.parse(localStorage.getItem("comentariosTV")) || [];
-  const monitoreado = obtenerEstadoMonitoreo(stb, db[stb]);
+  const informeActual = db[stb] || {};
+  const historicoPersistido = Array.isArray(informeActual.historico)
+    ? informeActual.historico
+    : [];
+  const analistaActual =
+    document.getElementById("analista")?.value?.trim() || "";
+  const turnoActual = document.getElementById("turno")?.value?.trim() || "";
+  const totalCanales = Object.keys(datos).length;
+  const fallas = Object.values(datos).filter((item) =>
+    [item.video, item.audioPri, item.audioSec, item.logo, item.epg].some(
+      (valor) => typeof valor === "string" && valor.includes("FAIL"),
+    ),
+  ).length;
+  const salud =
+    totalCanales > 0
+      ? Math.round(((totalCanales - fallas) / totalCanales) * 100)
+      : 100;
+  const novedades = Object.values(datos).filter(
+    (item) => (item?.novedad || "").trim() !== "",
+  ).length;
+  const monitoreado = true;
+  const registroAuto = crearRegistroHistoricoDesdeEstado({
+    analista: analistaActual,
+    turno: turnoActual,
+    observaciones: `Progreso guardado: ${salud}% saludable | ${fallas} fallas | ${novedades} novedades`,
+    siguienteAnalista:
+      document.getElementById("gestionSiguiente")?.value?.trim() || "N/A",
+    tipo: "guardado",
+    progreso: {
+      monitoreado,
+      totalCanales,
+      fallas,
+      salud,
+      novedades,
+    },
+    historicoPrevio: historicoPersistido,
+  });
+
+  historicoPersistido.push(registroAuto);
 
   db[stb] = {
+    ...informeActual,
     meta: {
-      analista: document.getElementById("analista")?.value || "",
-      turno: document.getElementById("turno")?.value || "",
+      ...(informeActual.meta || {}),
+      analista: analistaActual,
+      turno: turnoActual,
       stb: stb,
-      fecha: new Date().toLocaleString(),
+      fecha: new Date().toISOString(),
+      ultimoRevisor: registroAuto.analistaGestion,
       monitoreado,
+      progreso: {
+        totalCanales,
+        fallas,
+        salud,
+        novedades,
+      },
     },
     datos,
-    comentarios,
+    comentarios: Array.isArray(informeActual.comentarios)
+      ? informeActual.comentarios
+      : comentarios,
+    historico: historicoPersistido,
+    progreso: {
+      totalCanales,
+      fallas,
+      salud,
+      novedades,
+    },
   };
 
   localStorage.setItem("monitoreoTV", JSON.stringify(db, null, 2));
+  actividadMonitoreoPorSTB.set(stb, true);
+  renderTrazabilidad(stb);
   actualizarPanel();
   actualizarProgresoSTB();
 
@@ -470,6 +625,8 @@ function guardarLocal(silencioso = false) {
 function cargarDatos() {
   const stbSelect = document.getElementById("stb");
   if (!stbSelect) return;
+
+  sincronizarOpcionesSTB();
 
   const stb = stbSelect.value;
   const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
@@ -490,6 +647,13 @@ function cargarDatos() {
     const turnoInput = document.getElementById("turno");
     if (analistaInput) analistaInput.value = "";
     if (turnoInput) turnoInput.selectedIndex = 0;
+
+    const obsInput = document.getElementById("gestionObservacion");
+    const sigInput = document.getElementById("gestionSiguiente");
+    if (obsInput) obsInput.value = "";
+    if (sigInput) sigInput.value = "";
+
+    renderTrazabilidad(stb);
 
     actualizarPanel();
     actualizarProgresoSTB();
@@ -555,6 +719,24 @@ function cargarDatos() {
     localStorage.setItem("comentariosTV", JSON.stringify(data.comentarios));
     renderComentarios();
   }
+
+  const obsInput = document.getElementById("gestionObservacion");
+  const sigInput = document.getElementById("gestionSiguiente");
+  if (obsInput) obsInput.value = "";
+  if (sigInput) {
+    const ultimoRegistro =
+      Array.isArray(data.historico) && data.historico.length > 0
+        ? data.historico[data.historico.length - 1]
+        : null;
+    const continuidad =
+      ultimoRegistro?.siguienteAnalista &&
+      ultimoRegistro.siguienteAnalista !== "N/A"
+        ? ultimoRegistro.siguienteAnalista
+        : "";
+    sigInput.value = continuidad;
+  }
+
+  renderTrazabilidad(stb);
 
   actualizarPanel();
   actualizarProgresoSTB();
@@ -648,7 +830,7 @@ function agregarComentario() {
   if (!texto) return;
 
   const lista = obtenerComentarios();
-  lista.push({ texto, fecha: new Date().toLocaleString() });
+  lista.push({ texto, fecha: new Date().toISOString() });
   localStorage.setItem("comentariosTV", JSON.stringify(lista));
   input.value = "";
 
@@ -765,7 +947,195 @@ function actualizarProgresoSTB() {
   }
 }
 
-/* ================= EXPORTACIÓN E IMPORTACIÓN DE ARCHIVOS ================= */
+/* ================= PRUEBA DE 7 DÍAS PARA EL STB SELECCIONADO ================= */
+function obtenerLunesDeSemana(fecha = new Date()) {
+  const d = new Date(fecha);
+  const dia = d.getDay() === 0 ? 7 : d.getDay();
+  d.setHours(8, 0, 0, 0);
+  d.setMinutes(0);
+  d.setSeconds(0);
+  d.setMilliseconds(0);
+  d.setDate(d.getDate() - (dia - 1));
+  return d;
+}
+
+function cargarPruebaSieteDias() {
+  const stbSelect = document.getElementById("stb");
+  const analistaInput = document.getElementById("analista");
+  const turnoInput = document.getElementById("turno");
+  const obsInput = document.getElementById("gestionObservacion");
+  const sigInput = document.getElementById("gestionSiguiente");
+
+  const stbs = stbSelect
+    ? Array.from(stbSelect.options)
+        .map((opt) => opt.value || opt.text)
+        .filter(Boolean)
+    : ["Cisco PDS2100"];
+
+  if (
+    !confirm(
+      `¿Deseas cargar una prueba de 7 días para ${stbs.length} STBs y su historial de auditoría?`,
+    )
+  ) {
+    return;
+  }
+
+  const baseDate = obtenerLunesDeSemana(new Date());
+  const turnosDemo = ["T1", "T2", "T3", "T4", "T5", "T6", "T7"];
+  const analistasDemo = [
+    "Sofía",
+    "Camilo",
+    "Diana",
+    "Mateo",
+    "Laura",
+    "Andrés",
+    "Paula",
+    "Javier",
+    "Lucía",
+  ];
+  const observacionesDemo = [
+    "Inicio de revisión semanal",
+    "Validación de fallas de audio y video",
+    "Ajuste en configuración de video",
+    "Confirmación de estabilidad del canal",
+    "Registro de novedad en EPG",
+    "Cierre de incidencia pendiente",
+    "Prueba final de continuidad del tablero",
+  ];
+
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const globalComentarios = [];
+  const novedadesTemp = {};
+
+  stbs.forEach((stb, stbIndex) => {
+    const turnoDemo = turnosDemo[stbIndex % turnosDemo.length];
+    const analistaDemo = analistasDemo[stbIndex % analistasDemo.length];
+
+    const datos = {};
+    canales.slice(0, 5).forEach((canal, index) => {
+      const id = canal.replace(/[^a-zA-Z0-9]/g, "");
+      datos[id] = {
+        canal,
+        video: index % 2 === 0 ? "V OK" : "V FAIL",
+        audioPri: index % 3 === 0 ? "A1 OK" : "A1 FAIL",
+        audioSec: index % 4 === 0 ? "A2 OK" : "A2 FAIL",
+        logo: index % 5 === 0 ? "L OK" : "L FAIL",
+        epg: index === 2 ? "E FAIL" : "E OK",
+        novedad:
+          index === 3 ? `Demo: revisión STB ${stb} / turno ${turnoDemo}` : "",
+      };
+      novedadesTemp[id] = datos[id].novedad;
+    });
+
+    const comentarios = [
+      {
+        texto: `Demostración de auditoría para ${stb} en turno ${turnoDemo}`,
+        fecha: new Date(
+          baseDate.getTime() - 3 * 24 * 60 * 60 * 1000 - stbIndex * 60000,
+        ).toISOString(),
+      },
+      {
+        texto: `Historial de gestión preservado para ${stb}`,
+        fecha: new Date(
+          baseDate.getTime() - 24 * 60 * 60 * 1000 - stbIndex * 60000,
+        ).toISOString(),
+      },
+    ];
+
+    globalComentarios.push(...comentarios);
+
+    const historico = [];
+    for (let day = 0; day < 7; day++) {
+      const fecha = new Date(baseDate.getTime() + day * 24 * 60 * 60 * 1000 + stbIndex * 60000);
+      const analista = analistasDemo[(stbIndex + day) % analistasDemo.length];
+      const siguiente =
+        day === 6
+          ? "N/A"
+          : analistasDemo[(stbIndex + day + 1) % analistasDemo.length];
+      const observacion =
+        observacionesDemo[day] || "Gestión diaria de seguimiento";
+      const progresoDemo = {
+        monitoreado: true,
+        totalCanales: Object.keys(datos).length,
+        fallas: day % 2 === 0 ? 1 : 2,
+        salud: 100 - (day % 2 === 0 ? 20 : 40),
+        novedades: day === 4 ? 1 : 0,
+      };
+
+      historico.push(
+        crearRegistroHistoricoDesdeEstado({
+          analista,
+          turno: turnosDemo[day],
+          observaciones: observacion,
+          siguienteAnalista: siguiente,
+          tipo: "prueba7dias",
+          progreso: progresoDemo,
+          historicoPrevio: historico,
+          timestamp: fecha.toISOString(),
+        }),
+      );
+    }
+
+    const totalCanales = Object.keys(datos).length;
+    const fallas = Object.values(datos).filter((item) =>
+      [item.video, item.audioPri, item.audioSec, item.logo, item.epg].some(
+        (valor) => typeof valor === "string" && valor.includes("FAIL"),
+      ),
+    ).length;
+    const salud =
+      totalCanales > 0
+        ? Math.round(((totalCanales - fallas) / totalCanales) * 100)
+        : 100;
+    const novedades = Object.values(datos).filter(
+      (item) => (item?.novedad || "").trim() !== "",
+    ).length;
+
+    db[stb] = {
+      meta: {
+        analista: analistaDemo,
+        turno: turnoDemo,
+        stb,
+        fecha: new Date().toISOString(),
+        monitoreado: true,
+        ultimoRevisor: historico[historico.length - 1].analistaGestion,
+        progreso: {
+          totalCanales,
+          fallas,
+          salud,
+          novedades,
+        },
+      },
+      datos,
+      comentarios,
+      historico,
+      progreso: {
+        totalCanales,
+        fallas,
+        salud,
+        novedades,
+      },
+    };
+  });
+
+  localStorage.setItem("monitoreoTV", JSON.stringify(db, null, 2));
+  localStorage.setItem("comentariosTV", JSON.stringify(globalComentarios));
+  localStorage.setItem("novedadesTemp", JSON.stringify(novedadesTemp));
+
+  if (stbSelect) stbSelect.value = stbs[0];
+  if (analistaInput) analistaInput.value = db[stbs[0]].meta.analista;
+  if (turnoInput) turnoInput.value = db[stbs[0]].meta.turno;
+  if (obsInput) obsInput.value = "";
+  if (sigInput) sigInput.value = "";
+
+  cargarDatos();
+  actualizarPanel();
+  actualizarProgresoSTB();
+
+  alert(
+    `✅ Se cargó una prueba de 7 días para ${stbs.length} STBs con historial de gestión por analista.`,
+  );
+}
+
 function exportarDatos() {
   // Guardar datos actuales silenciosamente antes de exportar
   guardarLocal(true);
@@ -825,6 +1195,7 @@ function procesarArchivoImportado(event) {
       const currentDb = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
       const mergedDb = { ...currentDb, ...parsed };
       localStorage.setItem("monitoreoTV", JSON.stringify(mergedDb, null, 2));
+      sincronizarOpcionesSTB();
 
       const importedKeys = Object.keys(parsed);
       const stbSelect = document.getElementById("stb");
@@ -858,17 +1229,18 @@ function exportarExcel() {
 
   let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
   csvContent +=
-    "STB,Analista,Turno,Fecha,Canal,Video,Audio Pri,Audio Sec,Logo,EPG,Novedad\n";
+    "Tipo,STB,Turno,Analista,Fecha,Canal,Video,Audio Pri,Audio Sec,Logo,EPG,Novedad,Observación,Último Revisor,Siguiente Analista\n";
 
   Object.keys(db).forEach((stbKey) => {
-    const metadata = db[stbKey].meta;
+    const metadata = db[stbKey].meta || {};
     if (db[stbKey].datos) {
       Object.values(db[stbKey].datos).forEach((d) => {
         const fila = [
+          "Monitoreo",
           stbKey,
-          metadata.analista,
-          metadata.turno,
-          metadata.fecha,
+          metadata.turno || "",
+          metadata.analista || "",
+          metadata.fecha || "",
           d.canal,
           d.video,
           d.audioPri,
@@ -876,12 +1248,38 @@ function exportarExcel() {
           d.logo,
           d.epg,
           d.novedad || "",
+          "",
+          "",
+          "",
         ]
           .map((v) => `"${String(v).replace(/"/g, '""')}"`)
           .join(",");
         csvContent += fila + "\n";
       });
     }
+
+    (db[stbKey].historico || []).forEach((h) => {
+      const fila = [
+        "Trazabilidad",
+        stbKey,
+        h.turno || metadata.turno || "",
+        h.analistaGestion || metadata.analista || "",
+        h.timestamp || metadata.fecha || "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        h.observaciones || "",
+        h.ultimoRevisor || "",
+        h.siguienteAnalista || "",
+      ]
+        .map((v) => `"${String(v).replace(/"/g, '""')}"`)
+        .join(",");
+      csvContent += fila + "\n";
+    });
   });
 
   const encodedUri = encodeURI(csvContent);
@@ -1097,6 +1495,35 @@ function generarPDF() {
   }
   document.getElementById("pdfTablaFallas").innerHTML = tablaFallas;
 
+  let tablaHistorico = "";
+  let tieneHistoricoGlobal = false;
+  Object.keys(db).forEach((stbKey) => {
+    const data = db[stbKey];
+    if (data && data.historico && data.historico.length > 0) {
+      tieneHistoricoGlobal = true;
+      data.historico.forEach((h) => {
+        tablaHistorico += `
+          <tr>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${stbKey}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.turno || data.meta?.turno || "Sin turno"}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px; font-family: monospace;">${h.controlTemporal || h.timestamp}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.analistaGestion}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.observaciones}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.ultimoRevisor}</td>
+            <td style="padding: 8px 10px; border: 1px solid #ddd; font-size: 11px;">${h.siguienteAnalista}</td>
+          </tr>`;
+      });
+    }
+  });
+
+  if (!tieneHistoricoGlobal) {
+    tablaHistorico = `
+      <tr>
+        <td colspan="6" style="padding: 10px; border: 1px solid #ddd; text-align: center; color: #666; font-size: 11px;">Sin historial registrado</td>
+      </tr>`;
+  }
+  document.getElementById("pdfTablaHistorico").innerHTML = tablaHistorico;
+
   const conclusion = `
     <p><b>Se evaluaron ${estadisticasGlobales.totalSTBs} STBs con un total de ${totalGlobalCanales} canales.</b></p>
     <p><b>Estado general: ${estadoGlobal.replace("ESTADO GENERAL: ", "").replace("✅ ", "").replace("⚠️ ", "")}</b></p>
@@ -1184,7 +1611,14 @@ function limpiarVista() {
 
   localStorage.removeItem("novedadesTemp");
   const stbSelect = document.getElementById("stb");
-  if (stbSelect) limpiarEstadoMonitoreo(stbSelect.value);
+  if (stbSelect) {
+    limpiarEstadoMonitoreo(stbSelect.value);
+    const obsInput = document.getElementById("gestionObservacion");
+    const sigInput = document.getElementById("gestionSiguiente");
+    if (obsInput) obsInput.value = "";
+    if (sigInput) sigInput.value = "";
+    renderTrazabilidad(stbSelect.value);
+  }
   actualizarPanel();
   actualizarProgresoSTB();
   alert("🧹 Vista limpia. Formulario y selectores restablecidos.");
@@ -1213,6 +1647,19 @@ function resetTotal() {
   if (stbSelect) stbSelect.selectedIndex = 0;
   if (comentarioInput) comentarioInput.value = "";
 
+  const obsInput = document.getElementById("gestionObservacion");
+  const sigInput = document.getElementById("gestionSiguiente");
+  if (obsInput) obsInput.value = "";
+  if (sigInput) sigInput.value = "";
+
+  const tbody = document.getElementById("tablaTrazabilidadCuerpo");
+  if (tbody) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="text-center text-muted py-3">Sin registros de auditoría para este STB.</td>
+      </tr>`;
+  }
+
   const listaComentarios = document.getElementById("listaComentarios");
   if (listaComentarios) {
     listaComentarios.innerHTML = "<b>Histórico:</b><br>";
@@ -1221,4 +1668,157 @@ function resetTotal() {
   limpiarVista();
   actualizarProgresoSTB();
   alert("💥 Sistema completamente restablecido a cero.");
+}
+
+/* ================= REGISTRO DE GESTIÓN Y TRAZABILIDAD ================= */
+function registrarGestion() {
+  const stbSelect = document.getElementById("stb");
+  if (!stbSelect) return;
+  const stb = stbSelect.value;
+
+  const analistaInput = document.getElementById("analista");
+  const analista = analistaInput ? analistaInput.value.trim() : "";
+
+  if (!analista) {
+    alert(
+      "⚠️ Por favor ingrese el nombre del Analista antes de registrar la gestión.",
+    );
+    if (analistaInput) analistaInput.focus();
+    return;
+  }
+
+  const obsInput = document.getElementById("gestionObservacion");
+  const sigInput = document.getElementById("gestionSiguiente");
+
+  const observaciones = obsInput ? obsInput.value.trim() : "";
+  const siguienteAnalista = sigInput ? sigInput.value.trim() : "";
+
+  if (!observaciones && !siguienteAnalista) {
+    alert(
+      "⚠️ Debe ingresar una Observación o el nombre del Siguiente Analista para estampar la gestión.",
+    );
+    return;
+  }
+
+  const db = JSON.parse(localStorage.getItem("monitoreoTV")) || {};
+
+  // Si no existen datos guardados aún para este STB en db, los inicializamos
+  if (!db[stb]) {
+    db[stb] = {
+      meta: {
+        analista: analista,
+        turno: document.getElementById("turno")?.value || "T1",
+        stb: stb,
+        fecha: new Date().toISOString(),
+        monitoreado: false,
+      },
+      datos: {},
+      comentarios: [],
+    };
+  }
+
+  // Inicializar el histórico si no existe
+  if (!db[stb].historico) {
+    db[stb].historico = [];
+  }
+
+  const historialPrevio = Array.isArray(db[stb].historico)
+    ? db[stb].historico
+    : [];
+
+  const progresoActual = {
+    monitoreado: true,
+    totalCanales: Object.keys(db[stb].datos || {}).length,
+    fallas: Object.values(db[stb].datos || {}).filter((item) =>
+      [item.video, item.audioPri, item.audioSec, item.logo, item.epg].some(
+        (valor) => typeof valor === "string" && valor.includes("FAIL"),
+      ),
+    ).length,
+    novedades: Object.values(db[stb].datos || {}).filter(
+      (item) => (item?.novedad || "").trim() !== "",
+    ).length,
+  };
+  const progresoSalud =
+    progresoActual.totalCanales > 0
+      ? Math.round(
+          ((progresoActual.totalCanales - progresoActual.fallas) /
+            progresoActual.totalCanales) *
+            100,
+        )
+      : 100;
+  progresoActual.salud = progresoSalud;
+
+  // Crear el nuevo registro de gestión
+  const nuevoRegistro = crearRegistroHistoricoDesdeEstado({
+    analista,
+    turno: document.getElementById("turno")?.value || "T1",
+    observaciones: observaciones || "Revisión / Gestión realizada",
+    siguienteAnalista: siguienteAnalista || "N/A",
+    tipo: "gestion",
+    progreso: progresoActual,
+    historicoPrevio: historialPrevio,
+  });
+
+  historialPrevio.push(nuevoRegistro);
+  db[stb].historico = historialPrevio;
+  db[stb].meta = {
+    ...(db[stb].meta || {}),
+    analista,
+    turno: document.getElementById("turno")?.value || db[stb].meta?.turno || "",
+    stb,
+    fecha: new Date().toISOString(),
+    ultimoRevisor: nuevoRegistro.analistaGestion,
+    monitoreado: true,
+    progreso: progresoActual,
+  };
+
+  // Guardar en localStorage
+  localStorage.setItem("monitoreoTV", JSON.stringify(db, null, 2));
+
+  // Limpiar campos del formulario de trazabilidad
+  if (obsInput) obsInput.value = "";
+  if (sigInput) sigInput.value = "";
+
+  // Renderizar la tabla de trazabilidad
+  renderTrazabilidad(stb);
+
+  // Actualizar paneles y guardar estado
+  actualizarPanel();
+  actualizarProgresoSTB();
+
+  alert("⏱️ Gestión estampada en el histórico correctamente.");
+}
+
+function renderTrazabilidad(stb) {
+  const tbody = document.getElementById("tablaTrazabilidadCuerpo");
+  if (!tbody) return;
+
+  const db = JSON.parse(localStorage.getItem("monitoreoTV") || "{}");
+  const data = db[stb];
+
+  if (!data || !data.historico || data.historico.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" class="text-center text-muted py-3">Sin registros de auditoría para este STB.</td>
+      </tr>`;
+    return;
+  }
+
+  let html = "";
+  // Mostrar los registros del más reciente al más antiguo para visualización óptima
+  const historicoReversado = [...data.historico].reverse();
+
+  historicoReversado.forEach((h) => {
+    html += `
+      <tr>
+        <td class="text-info font-monospace" style="font-size: 12px; white-space: nowrap;">${h.controlTemporal || h.timestamp}</td>
+        <td><span class="badge-revisor">${h.turno || "Sin turno"}</span></td>
+        <td><span class="badge-analista-gestion">${h.analistaGestion}</span></td>
+        <td class="text-wrap">${h.observaciones}</td>
+        <td><span class="badge-revisor">${h.ultimoRevisor}</span></td>
+        <td class="text-warning font-semibold">${h.siguienteAnalista}</td>
+      </tr>`;
+  });
+
+  tbody.innerHTML = html;
 }
