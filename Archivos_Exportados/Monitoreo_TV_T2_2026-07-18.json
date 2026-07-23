@@ -1,7 +1,7 @@
 {
   "Cisco PDS2100": {
     "meta": {
-      "analista": "Lucius",
+      "analista": "Prueba1",
       "turno": "T1",
       "stb": "Cisco PDS2100",
       "fecha": "12/7/2026, 18:50:57",
@@ -1642,10 +1642,10 @@
   },
   "Kaon VMM1003": {
     "meta": {
-      "analista": "Laura emilia ",
+      "analista": "Prueba 2 ",
       "turno": "T2",
       "stb": "Kaon VMM1003",
-      "fecha": "12/7/2026, 18:50:39",
+      "fecha": "18/7/2026, 17:52:12",
       "monitoreado": true
     },
     "datos": {
