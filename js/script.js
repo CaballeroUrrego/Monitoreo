@@ -948,6 +948,17 @@ function actualizarProgresoSTB() {
 }
 
 /* ================= PRUEBA DE 7 DÍAS PARA EL STB SELECCIONADO ================= */
+function obtenerLunesDeSemana(fecha = new Date()) {
+  const d = new Date(fecha);
+  const dia = d.getDay() === 0 ? 7 : d.getDay();
+  d.setHours(8, 0, 0, 0);
+  d.setMinutes(0);
+  d.setSeconds(0);
+  d.setMilliseconds(0);
+  d.setDate(d.getDate() - (dia - 1));
+  return d;
+}
+
 function cargarPruebaSieteDias() {
   const stbSelect = document.getElementById("stb");
   const analistaInput = document.getElementById("analista");
@@ -969,8 +980,7 @@ function cargarPruebaSieteDias() {
     return;
   }
 
-  const baseDate = new Date();
-  baseDate.setHours(8, 0, 0, 0);
+  const baseDate = obtenerLunesDeSemana(new Date());
   const turnosDemo = ["T1", "T2", "T3", "T4", "T5", "T6", "T7"];
   const analistasDemo = [
     "Sofía",
@@ -1036,9 +1046,7 @@ function cargarPruebaSieteDias() {
 
     const historico = [];
     for (let day = 0; day < 7; day++) {
-      const fecha = new Date(
-        baseDate.getTime() - (6 - day) * 24 * 60 * 60 * 1000 + stbIndex * 60000,
-      );
+      const fecha = new Date(baseDate.getTime() + day * 24 * 60 * 60 * 1000 + stbIndex * 60000);
       const analista = analistasDemo[(stbIndex + day) % analistasDemo.length];
       const siguiente =
         day === 6
